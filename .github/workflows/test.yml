@@ -53,7 +53,7 @@ jobs:
         coverage report --fail-under=60
         coverage xml
       env:
-        DJANGO_SETTINGS_MODULE: SAMS.settings
+        DJANGO_SETTINGS_MODULE: SAMS.settings  # Point to the correct settings module
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
