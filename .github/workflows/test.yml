@@ -30,28 +30,30 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('SAMS/requirements.txt') }}-${{ hashFiles('**/setup.py') }}  # Cache based on the correct requirements file location
+        key: ${{ runner.os }}-pip-${{ hashFiles('SAMS/requirements.txt') }}-${{ hashFiles('**/setup.py') }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r SAMS/requirements.txt  # Correct path to the requirements file
+        pip install -r SAMS/requirements.txt
         pip install coverage
 
     - name: Set up the database
       run: |
+        cd SAMS  # Ensure we are in the correct directory
         python manage.py migrate --noinput
         python manage.py showmigrations  # Debugging step to check if migrations are applied
 
     - name: Run tests with coverage
       run: |
-        coverage run --source='.' manage.py test --verbosity 2  # Increased verbosity for better output
+        cd SAMS  # Ensure we are in the correct directory
+        coverage run --source='.' manage.py test --verbosity 2
         coverage report --fail-under=60
         coverage xml
       env:
-        DJANGO_SETTINGS_MODULE: SAMS.settings  # Make sure this points to the correct settings module
+        DJANGO_SETTINGS_MODULE: SAMS.settings
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
