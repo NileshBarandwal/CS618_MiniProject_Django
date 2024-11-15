@@ -1,0 +1,425 @@
+.responsive,
+.responsive * {
+  box-sizing: border-box;
+}
+.responsive {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 100vh;
+  position: relative;
+}
+.wrapper {
+  background: #f6f9ff;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.header {
+  background: #ffffff;
+  padding: 9px 20px 9px 20px;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 60px;
+  position: relative;
+  box-shadow: 0px 2px 20px 0px rgba(1, 41, 112, 0.1);
+}
+.name {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: absolute;
+  right: 20px;
+  top: calc(50% - 10px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.sams {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 26px;
+  line-height: 26px;
+  font-weight: 700;
+  position: absolute;
+  left: 17px;
+  top: calc(50% - 13px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.body {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.teacher-sidebar {
+  background: #ffffff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 108px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  width: 300px;
+  position: relative;
+  box-shadow: 0px 0px 20px 0px rgba(1, 41, 112, 0.1);
+  overflow: hidden;
+}
+.ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.a-nalyze {
+  color: #899bbd;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 11px;
+  line-height: 16.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.a {
+  width: 100%;
+  background: #ffffff;
+  padding: 5px 10px 5px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.material-symbols-table-chart-view-outline-rounded {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  position: relative;
+  overflow: visible;
+}
+.dashboard {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.carbon-report {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  position: relative;
+  overflow: visible;
+}
+.report {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.manage {
+  color: #899bbd;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 11px;
+  line-height: 16.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.a2 {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 5px 10px 5px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.ph-student-bold {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  position: relative;
+  overflow: visible;
+}
+.profile .take_attendance {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.exit {
+  color: #899bbd;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 11px;
+  line-height: 16.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.icon-park-outline-logout {
+  flex-shrink: 0;
+  width: 19px;
+  height: 19px;
+  position: relative;
+  overflow: visible;
+}
+.logout {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ta-section {
+  color: #899bbd;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 11px;
+  line-height: 16.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.lucide-file-spreadsheet {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.group {
+  width: 66.67%;
+  height: 83.33%;
+  position: absolute;
+  right: 16.67%;
+  left: 16.67%;
+  bottom: 8.33%;
+  top: 8.33%;
+  overflow: visible;
+}
+.take-attendance {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.footer {
+  background: #a0aaf8;
+  padding: 20px 10px 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.copyright {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.c-2024-sams-all-rights-resered {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.privacy-policy {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.terms-of-service {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.contact-us {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Default link style */
+.teacher-sidebar .a, .teacher-sidebar .a2 {
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+/* Active link style */
+.teacher-sidebar .a.active, .teacher-sidebar .a2.active {
+  background-color:#97aace;
+  color: white;
+}
+
+.teacher-sidebar .a.active img, .teacher-sidebar .a2.active img {
+  filter: brightness(1.2); /* Slightly brighten icons when active */
+}
+
+.a div, .a2 div {
+  width: 100%;
+}
+
+.a a, .a2 a {
+  width: 100%;
+}
+
+
+@media (max-width: 768px) {
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  .teacher-sidebar {
+    background: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 108px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 0px 20px 0px rgba(1, 41, 112, 0.1);
+    overflow: hidden;
+  }
+  .ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative;
+  }
+}

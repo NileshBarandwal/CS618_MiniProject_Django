@@ -1,0 +1,756 @@
+{% extends 'admin/master.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+  <div class="bread-crumb">
+    <div class="attendance">Attendance</div>
+    <div class="ol">
+      <div class="teack">Teack</div>
+      <div class="li">
+        <div class="div">/</div>
+        <div class="attendance-sheet">Attendance sheet</div>
+      </div>
+      <div class="li2">
+        <div class="div">/</div>
+        <div class="attendance2">Attendance</div>
+      </div>
+    </div>
+  </div>
+  <div class="course-list">
+    <div class="div2">
+      <div class="state">
+        <img class="image" src="{% static 'admin/image0.svg'%}" />
+        <div class="div3">
+          <div class="advance-java">Advance Java</div>
+        </div>
+      </div>
+      <div class="label">
+        <div class="subject">Subject</div>
+      </div>
+    </div>
+    <div class="div2">
+      <div class="state2">
+        <img class="image2" src="{% static 'admin/image1.svg'%}" />
+        <div class="div3">
+          <div class="a">A</div>
+        </div>
+      </div>
+      <div class="label2">
+        <div class="section">Section</div>
+      </div>
+    </div>
+    <div class="div2">
+      <div class="state">
+        <img class="image3" src="{% static 'admin/image2.svg'%}" />
+        <div class="div3">
+          <div class="_2023-03-15">2023/03/15</div>
+        </div>
+      </div>
+      <div class="label3">
+        <div class="date">Date</div>
+      </div>
+    </div>
+    <div class="component-7">
+      <div class="scan-to-take-attendance">Generate Sheet</div>
+    </div>
+  </div>
+  <div class="user-details">
+    <div class="table">
+      <div class="h-5">
+        <div class="subject-report">Subject Report</div>
+      </div>
+      <div class="tr">
+        <div class="th">
+          <div class="div4">#</div>
+        </div>
+        <div class="th2">
+          <div class="student-name">Student name</div>
+        </div>
+        <div class="th3">
+          <div class="semester">Semester</div>
+        </div>
+        <div class="th3">
+          <div class="total-present-day">Date</div>
+        </div>
+        <div class="th4">
+          <div class="total-absence-day">Status</div>
+        </div>
+      </div>
+      <div class="tbody">
+        <div class="tr2">
+          <div class="_1">1</div>
+          <div class="maria">Maria</div>
+          <div class="first">First</div>
+          <div class="_10-2-2024">10/2/2024</div>
+          <div class="present">Present</div>
+        </div>
+        <div class="tr3">
+          <div class="_1">1</div>
+          <div class="maria2">Maria</div>
+          <div class="first">First</div>
+          <div class="_11-2-2024">11/2/2024</div>
+          <div class="absent">Absent</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block css %}
+
+<style>
+
+.content,
+.content * {
+  box-sizing: border-box;
+}
+.content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.bread-crumb {
+  flex-shrink: 0;
+  width: 1144px;
+  height: 50px;
+  position: relative;
+}
+.attendance {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 24px;
+  line-height: 28.8px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ol {
+  width: 1152px;
+  height: 21px;
+  position: absolute;
+  left: 0px;
+  top: 28.8px;
+}
+.teack {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 1px;
+  width: 38.5px;
+  height: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.li {
+  padding: 0px 0px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 7.17px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 132px;
+  top: -0.8px;
+}
+.div {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.attendance-sheet {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.li2 {
+  padding: 0px 0px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 7.17px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 38px;
+  top: 0.2px;
+}
+.attendance2 {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.course-list {
+  padding: 10px 0px 10px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.div2 {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.state {
+  background: #ffffff;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  flex-shrink: 0;
+  height: 58px;
+  position: relative;
+}
+.image {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 13px;
+  top: calc(50% - 6px);
+  overflow: visible;
+}
+.div3 {
+  padding: 0px 42px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 13px;
+  top: calc(50% - 2px);
+  overflow: hidden;
+}
+.advance-java {
+  color: #212529;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.label {
+  opacity: 0.65;
+  padding: 12.3px 89.35px 13px 11.05px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: absolute;
+  right: 14.56px;
+  left: -5.9599609375px;
+  top: calc(50% - 35.8px);
+  overflow: hidden;
+}
+.subject {
+  color: #444444;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.state2 {
+  background: #ffffff;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  flex-shrink: 0;
+  width: 164px;
+  height: 58px;
+  position: relative;
+}
+.image2 {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 13px;
+  top: calc(50% - 6px);
+  overflow: visible;
+}
+.a {
+  color: #212529;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.label2 {
+  opacity: 0.65;
+  padding: 12.3px 89.35px 13px 11.05px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: absolute;
+  left: calc(50% - 87.96px);
+  top: calc(50% - 35.8px);
+  overflow: hidden;
+}
+.section {
+  color: #444444;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.image3 {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 13px;
+  top: calc(50% - 6px);
+  overflow: visible;
+}
+._2023-03-15 {
+  color: #212529;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.label3 {
+  opacity: 0.65;
+  padding: 12.3px 89.35px 13px 11.05px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: absolute;
+  left: calc(50% - 78.46px);
+  bottom: 15.5px;
+  top: -6.7998046875px;
+  overflow: hidden;
+}
+.date {
+  color: #444444;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.component-7 {
+  background: #4154f1;
+  border-radius: 8px;
+  padding: 31px 65px 31px 65px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 140px;
+  height: 45px;
+  position: relative;
+}
+.scan-to-take-attendance {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  position: relative;
+}
+.user-details {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.h-5 {
+  padding: 10px 0px 10px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.subject-report {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito-Medium", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tr {
+  background: #f6f6fe;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.th {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 76.22px 11.8px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 58px;
+  position: relative;
+}
+.div4 {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th2 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 146.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.student-name {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th3 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 182.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.semester {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.total-present-day {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th4 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 158.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.total-absence-day {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tbody {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.tr2 {
+  background: #ffffff;
+  padding: 10px 8px 10px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+._1 {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  width: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.maria {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.first {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._10-2-2024 {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.present {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tr3 {
+  background: #ffc6c6;
+  padding: 10px 8px 10px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.maria2 {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._11-2-2024 {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.absent {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+
+</style>
+
+{% endblock %}

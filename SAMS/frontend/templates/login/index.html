@@ -1,0 +1,396 @@
+{% extends 'login/master.html' %}
+
+{% block content %}
+
+<form method="POST" id="login-form">
+  {% csrf_token %}
+<div class="form">
+  <div class="component-37">
+    <div class="student">
+      <div class="radio-group">
+          <input type="radio" id="student" name="role" value="student" class="custom-radio">
+          <label for="student" class="custom-radio-label">
+              <div class="custom-radio-circle"></div>
+              <span class="radio-text">Student</span>
+          </label>
+      </div>
+  </div>
+  <div class="teacher">
+      <div class="radio-group">
+          <input type="radio" id="teacher" name="role" value="teacher" class="custom-radio">
+          <label for="teacher" class="custom-radio-label">
+              <div class="custom-radio-circle"></div>
+              <span class="radio-text">Teacher</span>
+          </label>
+      </div>
+  </div>
+  <div class="admin2">
+      <div class="radio-group">
+          <input type="radio" id="admin" name="role" value="admin" class="custom-radio">
+          <label for="admin" class="custom-radio-label">
+              <div class="custom-radio-circle"></div>
+              <span class="radio-text">Admin</span>
+          </label>
+      </div>
+  </div>
+  </div>
+  <div class="frame-4">
+    <!-- <div class="username">Username</div>
+    <div class="rectangle"></div> -->
+    <label class="input-label">Username</label>
+    <input type="text" name="username" class="custom-input" placeholder="Enter your Username">
+  </div>
+  <div class="frame-5">
+    <!-- <div class="password">Password</div>
+    <div class="rectangle"></div> -->
+    <label for="password" class="input-label">Password</label>
+    <input type="password" name="password" class="custom-input" placeholder="Enter your password">
+  </div>
+  <div class="group-7">
+    <input type="checkbox" id="remember" class="custom-checkbox">
+    <label for="remember" class="remember-me-label">Remember me</label>
+</div>
+  <div class="frame-3">
+    <input type="submit" value="Sign in" class="custom-button">
+  </div>
+  <div class="forgot-password"><a href="{% url 'login/forgot_password' %}">Forgot password?</a></div>
+</div>
+</form>
+
+<script>
+  // Function to get the CSRF token from the cookie
+  function getCsrfToken() {
+    const metaContent = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = metaContent;
+      const csrfToken = tempDiv.querySelector('input').value;
+      return csrfToken
+  }
+
+  document.getElementById("login-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const username = document.querySelector('input[name="username"]').value;
+    const password = document.querySelector('input[name="password"]').value;
+    const role = document.querySelector('input[name="role"]:checked').value;
+
+    const csrfToken = getCsrfToken();
+
+    // Send the request to the backend
+    fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken  // Add CSRF token to the header
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        role: role
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status == 'success') {
+        window.location.href = `/save_data?role=${role}&user_id=${data.data.id}&user_name=${data.data.name}`
+      } else {
+        // Handle login failure
+        alert("Login failed: " + data.error);
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("An error occurred while logging in.");
+    });
+  });
+</script>
+
+{% endblock %}
+
+{% block css %}
+
+<style>
+
+.form,
+.form * {
+  box-sizing: border-box;
+  font-family: "Roboto-Regular", sans-serif; /* Match font */
+}
+.form {
+  background: #ffffff;
+  border-radius: 4px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.12);
+  border-width: 1px;
+  padding: 48px 49px 48px 49px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.component-37 {
+  display: flex;
+  flex-direction: row;
+  gap: 21px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.group-2 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: static;
+}
+
+.ellipse-22 {
+  border-radius: 50%;
+  width: 7.59%;
+  height: 21.43%;
+  position: absolute;
+  right: 83.54%;
+  left: 8.86%;
+  bottom: 39.29%;
+  top: 39.29%;
+}
+.teacher2 {
+  color: #3c4ef1;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+}
+.admin2 {
+  background: rgba(145, 159, 232, 0.2);
+  border-radius: 8px;
+  border-style: solid;
+  border-color: #5f6ef1;
+  border-width: 1px;
+  padding: 16px 8px 16px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 158px;
+  position: relative;
+}
+.frame-4 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.username {
+  color: #212529;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  width: 71px;
+}
+.rectangle {
+  background: #ffffff;
+  border-radius: 4px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  flex-shrink: 0;
+  width: 526px;
+  height: 38px;
+  position: relative;
+}
+.frame-5 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  align-self: stretch;
+  position: relative;
+}
+
+/*.password {
+  color: #212529;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  width: 66px;
+}
+*/
+.custom-input {
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding for input */
+  border: 1px solid #ced4da; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  font-family: "Roboto-Regular", sans-serif; /* Match font */
+  font-size: 15px; /* Font size */
+  color: #212529; /* Text color */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-top: 8px; /* Space above */
+}
+.frame-3 {
+  background: #4154f1;
+  border-radius: 5px;
+  padding: 6px 13px 6px 13px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.sign-in {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+}
+.forgot-password {
+  color: #6c757d;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  line-height: 21px;
+  font-weight: 400;
+  position: relative;
+  width: 110px;
+}
+
+.remember-me-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer; /* Pointer on hover */
+  width: max-content;
+}
+
+.remember-me-label::before {
+  content: '';
+  width: 20px; /* Checkbox size */
+  height: 20px; /* Checkbox size */
+  border: 2px solid #5f6ef1; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  margin-right: 8px; /* Space between checkbox and text */
+  display: inline-block; /* Make it inline */
+  vertical-align: middle; /* Align with text */
+  transition: background 0.3s; /* Transition effect */
+}
+
+.custom-checkbox:checked + .remember-me-label::before {
+  background: #3c4ef1; /* Background when checked */
+  content: '✓'; /* Checkmark */
+  color: white; /* Checkmark color */
+  text-align: center; /* Center the checkmark */
+  line-height: 20px; /* Center vertically */
+}
+
+.custom-checkbox {
+  display: none; /* Hide default checkbox */
+}
+
+.custom-button {
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding */
+  background-color: #3c4ef1; /* Background color */
+  color: #ffffff; /* Text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  font-family: "Roboto-Regular", sans-serif; /* Match font */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer on hover */
+  transition: background-color 0.3s; /* Transition effect */
+}
+
+.custom-button:hover {
+  background-color: #5f6ef1; /* Lighter background on hover */
+}
+
+.student, .teacher, .admin2 {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Align items vertically */
+  justify-content: flex-start; /* Align items to the left */
+  background: #f0f4fb;
+  border-radius: 8px;
+  border: 1px solid #5f6ef1;
+  padding: 16px 8px;
+  gap: 12px; /* Space between elements */
+  width: 158px; /* Adjust as needed */
+  position: relative;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  cursor: pointer !important; /* Change cursor to pointer for better UX */
+}
+
+.custom-radio {
+  display: none; /* Hide the default radio button */
+}
+
+.custom-radio-label {
+  display: flex;
+  align-items: center;
+}
+
+.custom-radio-circle {
+  width: 24px; /* Adjust size */
+  height: 24px; /* Adjust size */
+  border-radius: 50%;
+  border: 2px solid #5f6ef1; /* Border color */
+  margin-right: 8px; /* Space between radio and text */
+  position: relative;
+  cursor: pointer;
+}
+
+.custom-radio-circle::after {
+  content: '';
+  display: none; /* Initially hidden */
+  width: 12px; /* Inner circle size */
+  height: 12px; /* Inner circle size */
+  border-radius: 50%;
+  background: #3c4ef1; /* Inner circle color */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.custom-radio:checked + .custom-radio-label .custom-radio-circle::after {
+  display: block; /* Show inner circle when checked */
+}
+
+.radio-text {
+  color: #3c4ef1; /* Adjust text color */
+  font-family: "Roboto-Regular", sans-serif; /* Match your font */
+  font-size: 14px; /* Match your font size */
+  line-height: 24px; /* Match line height */
+}
+
+</style>
+
+{% endblock %}

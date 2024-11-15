@@ -1,0 +1,286 @@
+/* Figma Styles of your File */
+:root {
+  /* Colors */
+  --material-theme-white: #ffffff;
+  --material-theme-black: #000000;
+  --material-theme-sys-light-primary: #356a21;
+  --material-theme-sys-light-on-primary: #ffffff;
+  --material-theme-sys-light-primary-container: #b5f399;
+  --material-theme-sys-light-on-primary-container: #052100;
+  --material-theme-sys-light-secondary: #55624c;
+  --material-theme-sys-light-on-secondary: #ffffff;
+  --material-theme-sys-light-secondary-container: #d8e7cb;
+  --material-theme-sys-light-on-secondary-container: #131f0d;
+  --material-theme-sys-light-tertiary: #386667;
+  --material-theme-sys-light-on-tertiary: #ffffff;
+  --material-theme-sys-light-tertiary-container: #bbebed;
+  --material-theme-sys-light-on-tertiary-container: #002021;
+  --material-theme-sys-light-error: #ba1a1a;
+  --material-theme-sys-light-on-error: #ffffff;
+  --material-theme-sys-light-error-container: #ffdad6;
+  --material-theme-sys-light-on-error-container: #410002;
+  --material-theme-sys-light-outline: #73796e;
+  --material-theme-sys-light-background: #fdfdf6;
+  --material-theme-sys-light-on-background: #1a1c18;
+  --material-theme-sys-light-surface: #fdfdf6;
+  --material-theme-sys-light-on-surface: #1a1c18;
+  --material-theme-sys-light-surface-variant: #dfe4d7;
+  --material-theme-sys-light-on-surface-variant: #43483f;
+  --material-theme-sys-light-inverse-surface: #2f312d;
+  --material-theme-sys-light-inverse-on-surface: #f1f1ea;
+  --material-theme-sys-light-inverse-primary: #9ad680;
+  --material-theme-sys-light-shadow: #000000;
+  --material-theme-sys-light-surface-tint: #356a21;
+  --material-theme-sys-light-outline-variant: #c3c8bb;
+  --material-theme-sys-light-scrim: #000000;
+  --material-theme-sys-dark-primary: #9ad680;
+  --material-theme-sys-dark-on-primary: #0c3900;
+  --material-theme-sys-dark-primary-container: #1d5109;
+  --material-theme-sys-dark-on-primary-container: #b5f399;
+  --material-theme-sys-dark-secondary: #bccbb0;
+  --material-theme-sys-dark-on-secondary: #273421;
+  --material-theme-sys-dark-secondary-container: #3d4b36;
+  --material-theme-sys-dark-on-secondary-container: #d8e7cb;
+  --material-theme-sys-dark-tertiary: #a0cfd0;
+  --material-theme-sys-dark-on-tertiary: #003738;
+  --material-theme-sys-dark-tertiary-container: #1e4e4f;
+  --material-theme-sys-dark-on-tertiary-container: #bbebed;
+  --material-theme-sys-dark-error: #ffb4ab;
+  --material-theme-sys-dark-on-error: #690005;
+  --material-theme-sys-dark-error-container: #93000a;
+  --material-theme-sys-dark-on-error-container: #ffdad6;
+  --material-theme-sys-dark-outline: #8d9387;
+  --material-theme-sys-dark-background: #1a1c18;
+  --material-theme-sys-dark-on-background: #e3e3dc;
+  --material-theme-sys-dark-surface: #1a1c18;
+  --material-theme-sys-dark-on-surface: #c6c7c1;
+  --material-theme-sys-dark-surface-variant: #43483f;
+  --material-theme-sys-dark-on-surface-variant: #c3c8bb;
+  --material-theme-sys-dark-inverse-surface: #e3e3dc;
+  --material-theme-sys-dark-inverse-on-surface: #1a1c18;
+  --material-theme-sys-dark-inverse-primary: #356a21;
+  --material-theme-sys-dark-shadow: #000000;
+  --material-theme-sys-dark-surface-tint: #9ad680;
+  --material-theme-sys-dark-outline-variant: #43483f;
+  --material-theme-sys-dark-scrim: #000000;
+  --material-theme-ref-primary-primary0: #000000;
+  --material-theme-ref-primary-primary10: #21005d;
+  --material-theme-ref-primary-primary20: #381e72;
+  --material-theme-ref-primary-primary30: #4f378b;
+  --material-theme-ref-primary-primary40: #6750a4;
+  --material-theme-ref-primary-primary50: #7f67be;
+  --material-theme-ref-primary-primary60: #9a82db;
+  --material-theme-ref-primary-primary70: #b69df8;
+  --material-theme-ref-primary-primary80: #d0bcff;
+  --material-theme-ref-primary-primary90: #eaddff;
+  --material-theme-ref-primary-primary95: #f6edff;
+  --material-theme-ref-primary-primary99: #fffbfe;
+  --material-theme-ref-primary-primary100: #ffffff;
+  --material-theme-ref-primary-primary5: #021500;
+  --material-theme-ref-secondary-secondary0: #000000;
+  --material-theme-ref-secondary-secondary10: #1d192b;
+  --material-theme-ref-secondary-secondary20: #332d41;
+  --material-theme-ref-secondary-secondary30: #4a4458;
+  --material-theme-ref-secondary-secondary40: #625b71;
+  --material-theme-ref-secondary-secondary50: #7a7289;
+  --material-theme-ref-secondary-secondary60: #958da5;
+  --material-theme-ref-secondary-secondary70: #b0a7c0;
+  --material-theme-ref-secondary-secondary80: #ccc2dc;
+  --material-theme-ref-secondary-secondary90: #e8def8;
+  --material-theme-ref-secondary-secondary95: #f6edff;
+  --material-theme-ref-secondary-secondary99: #fffbfe;
+  --material-theme-ref-secondary-secondary100: #ffffff;
+  --material-theme-ref-tertiary-tertiary0: #000000;
+  --material-theme-ref-tertiary-tertiary10: #31111d;
+  --material-theme-ref-tertiary-tertiary20: #492532;
+  --material-theme-ref-tertiary-tertiary30: #633b48;
+  --material-theme-ref-tertiary-tertiary40: #7d5260;
+  --material-theme-ref-tertiary-tertiary50: #986977;
+  --material-theme-ref-tertiary-tertiary60: #b58392;
+  --material-theme-ref-tertiary-tertiary70: #d29dac;
+  --material-theme-ref-tertiary-tertiary80: #efb8c8;
+  --material-theme-ref-tertiary-tertiary90: #ffd8e4;
+  --material-theme-ref-tertiary-tertiary95: #ffecf1;
+  --material-theme-ref-tertiary-tertiary99: #fffbfa;
+  --material-theme-ref-tertiary-tertiary100: #ffffff;
+  --material-theme-ref-error-error0: #000000;
+  --material-theme-ref-error-error10: #410e0b;
+  --material-theme-ref-error-error20: #601410;
+  --material-theme-ref-error-error30: #8c1d18;
+  --material-theme-ref-error-error40: #b3261e;
+  --material-theme-ref-error-error50: #dc362e;
+  --material-theme-ref-error-error60: #e46962;
+  --material-theme-ref-error-error70: #ec928e;
+  --material-theme-ref-error-error80: #f2b8b5;
+  --material-theme-ref-error-error90: #f9dedc;
+  --material-theme-ref-error-error95: #fceeee;
+  --material-theme-ref-error-error99: #fffbf9;
+  --material-theme-ref-error-error100: #ffffff;
+  --material-theme-ref-neutral-neutral0: #000000;
+  --material-theme-ref-neutral-neutral10: #1c1b1f;
+  --material-theme-ref-neutral-neutral20: #313033;
+  --material-theme-ref-neutral-neutral30: #484649;
+  --material-theme-ref-neutral-neutral40: #605d62;
+  --material-theme-ref-neutral-neutral50: #787579;
+  --material-theme-ref-neutral-neutral60: #939094;
+  --material-theme-ref-neutral-neutral70: #aeaaae;
+  --material-theme-ref-neutral-neutral80: #c9c5ca;
+  --material-theme-ref-neutral-neutral90: #e6e1e5;
+  --material-theme-ref-neutral-neutral95: #f4eff4;
+  --material-theme-ref-neutral-neutral99: #fffbfe;
+  --material-theme-ref-neutral-neutral100: #ffffff;
+  --material-theme-ref-neutral-variant-neutral-variant0: #000000;
+  --material-theme-ref-neutral-variant-neutral-variant10: #1d1a22;
+  --material-theme-ref-neutral-variant-neutral-variant20: #322f37;
+  --material-theme-ref-neutral-variant-neutral-variant30: #49454f;
+  --material-theme-ref-neutral-variant-neutral-variant40: #605d66;
+  --material-theme-ref-neutral-variant-neutral-variant50: #79747e;
+  --material-theme-ref-neutral-variant-neutral-variant60: #938f99;
+  --material-theme-ref-neutral-variant-neutral-variant70: #aea9b4;
+  --material-theme-ref-neutral-variant-neutral-variant80: #cac4d0;
+  --material-theme-ref-neutral-variant-neutral-variant90: #e7e0ec;
+  --material-theme-ref-neutral-variant-neutral-variant95: #f5eefa;
+  --material-theme-ref-neutral-variant-neutral-variant99: #fffbfe;
+  --material-theme-ref-neutral-variant-neutral-variant100: #ffffff;
+  --material-theme-key-colors-primary: #6750a4;
+  --material-theme-source-seed: #6750a4;
+  --material-theme-surfaces-light-surface1: linear-gradient(
+      to left,
+      rgba(103, 80, 164, 0.05),
+      rgba(103, 80, 164, 0.05)
+    ),
+    linear-gradient(to left, #fffbfe, #fffbfe);
+  --material-theme-surfaces-light-surface2: linear-gradient(
+      to left,
+      rgba(103, 80, 164, 0.08),
+      rgba(103, 80, 164, 0.08)
+    ),
+    linear-gradient(to left, #fffbfe, #fffbfe);
+  --material-theme-surfaces-light-surface3: linear-gradient(
+      to left,
+      rgba(103, 80, 164, 0.11),
+      rgba(103, 80, 164, 0.11)
+    ),
+    linear-gradient(to left, #fffbfe, #fffbfe);
+  --material-theme-surfaces-light-surface4: linear-gradient(
+      to left,
+      rgba(103, 80, 164, 0.12),
+      rgba(103, 80, 164, 0.12)
+    ),
+    linear-gradient(to left, #fffbfe, #fffbfe);
+  --material-theme-surfaces-light-surface5: linear-gradient(
+      to left,
+      rgba(103, 80, 164, 0.14),
+      rgba(103, 80, 164, 0.14)
+    ),
+    linear-gradient(to left, #fffbfe, #fffbfe);
+  --material-theme-surfaces-dark-surface1: linear-gradient(
+      to left,
+      rgba(208, 188, 255, 0.05),
+      rgba(208, 188, 255, 0.05)
+    ),
+    linear-gradient(to left, #1c1b1f, #1c1b1f);
+  --material-theme-surfaces-dark-surface2: linear-gradient(
+      to left,
+      rgba(208, 188, 255, 0.08),
+      rgba(208, 188, 255, 0.08)
+    ),
+    linear-gradient(to left, #1c1b1f, #1c1b1f);
+  --material-theme-surfaces-dark-surface3: linear-gradient(
+      to left,
+      rgba(208, 188, 255, 0.11),
+      rgba(208, 188, 255, 0.11)
+    ),
+    linear-gradient(to left, #1c1b1f, #1c1b1f);
+  --material-theme-surfaces-dark-surface4: linear-gradient(
+      to left,
+      rgba(208, 188, 255, 0.12),
+      rgba(208, 188, 255, 0.12)
+    ),
+    linear-gradient(to left, #1c1b1f, #1c1b1f);
+  --material-theme-surfaces-dark-surface5: linear-gradient(
+      to left,
+      rgba(208, 188, 255, 0.14),
+      rgba(208, 188, 255, 0.14)
+    ),
+    linear-gradient(to left, #1c1b1f, #1c1b1f);
+
+  /* Fonts */
+  --material-theme-display-large-font-family: Roboto-Regular, sans-serif;
+  --material-theme-display-large-font-size: 57px;
+  --material-theme-display-large-line-height: 64px;
+  --material-theme-display-large-font-weight: 400;
+  --material-theme-display-large-font-style: normal;
+  --material-theme-display-medium-font-family: Roboto-Regular, sans-serif;
+  --material-theme-display-medium-font-size: 45px;
+  --material-theme-display-medium-line-height: 52px;
+  --material-theme-display-medium-font-weight: 400;
+  --material-theme-display-medium-font-style: normal;
+  --material-theme-display-small-font-family: Roboto-Regular, sans-serif;
+  --material-theme-display-small-font-size: 36px;
+  --material-theme-display-small-line-height: 44px;
+  --material-theme-display-small-font-weight: 400;
+  --material-theme-display-small-font-style: normal;
+  --material-theme-headline-large-font-family: Roboto-Regular, sans-serif;
+  --material-theme-headline-large-font-size: 32px;
+  --material-theme-headline-large-line-height: 40px;
+  --material-theme-headline-large-font-weight: 400;
+  --material-theme-headline-large-font-style: normal;
+  --material-theme-headline-medium-font-family: Roboto-Regular, sans-serif;
+  --material-theme-headline-medium-font-size: 28px;
+  --material-theme-headline-medium-line-height: 36px;
+  --material-theme-headline-medium-font-weight: 400;
+  --material-theme-headline-medium-font-style: normal;
+  --material-theme-headline-small-font-family: Roboto-Regular, sans-serif;
+  --material-theme-headline-small-font-size: 24px;
+  --material-theme-headline-small-line-height: 32px;
+  --material-theme-headline-small-font-weight: 400;
+  --material-theme-headline-small-font-style: normal;
+  --material-theme-title-large-font-family: Roboto-Regular, sans-serif;
+  --material-theme-title-large-font-size: 22px;
+  --material-theme-title-large-line-height: 28px;
+  --material-theme-title-large-font-weight: 400;
+  --material-theme-title-large-font-style: normal;
+  --material-theme-title-medium-font-family: Roboto-Medium, sans-serif;
+  --material-theme-title-medium-font-size: 16px;
+  --material-theme-title-medium-line-height: 24px;
+  --material-theme-title-medium-font-weight: 500;
+  --material-theme-title-medium-font-style: normal;
+  --material-theme-title-small-font-family: Roboto-Medium, sans-serif;
+  --material-theme-title-small-font-size: 14px;
+  --material-theme-title-small-line-height: 20px;
+  --material-theme-title-small-font-weight: 500;
+  --material-theme-title-small-font-style: normal;
+  --material-theme-body-large-font-family: Roboto-Regular, sans-serif;
+  --material-theme-body-large-font-size: 16px;
+  --material-theme-body-large-line-height: 24px;
+  --material-theme-body-large-font-weight: 400;
+  --material-theme-body-large-font-style: normal;
+  --material-theme-body-medium-font-family: Roboto-Regular, sans-serif;
+  --material-theme-body-medium-font-size: 14px;
+  --material-theme-body-medium-line-height: 20px;
+  --material-theme-body-medium-font-weight: 400;
+  --material-theme-body-medium-font-style: normal;
+  --material-theme-body-small-font-family: Roboto-Regular, sans-serif;
+  --material-theme-body-small-font-size: 12px;
+  --material-theme-body-small-line-height: 16px;
+  --material-theme-body-small-font-weight: 400;
+  --material-theme-body-small-font-style: normal;
+  --material-theme-label-large-font-family: Roboto-Medium, sans-serif;
+  --material-theme-label-large-font-size: 14px;
+  --material-theme-label-large-line-height: 20px;
+  --material-theme-label-large-font-weight: 500;
+  --material-theme-label-large-font-style: normal;
+  --material-theme-label-medium-font-family: Roboto-Medium, sans-serif;
+  --material-theme-label-medium-font-size: 12px;
+  --material-theme-label-medium-line-height: 16px;
+  --material-theme-label-medium-font-weight: 500;
+  --material-theme-label-medium-font-style: normal;
+  --material-theme-label-small-font-family: Roboto-Medium, sans-serif;
+  --material-theme-label-small-font-size: 11px;
+  --material-theme-label-small-line-height: 16px;
+  --material-theme-label-small-font-weight: 500;
+  --material-theme-label-small-font-style: normal;
+
+  /* Effects */
+}

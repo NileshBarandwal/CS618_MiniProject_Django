@@ -1,0 +1,718 @@
+{% extends 'admin/master.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+    <div class="bread-crumb">
+      <div class="slot">Slot</div>
+      <div class="ol">
+        <div class="manage-slot">Manage/ Slot</div>
+      </div>
+    </div>
+    <div class="add-button-coontainer">
+      <div class="component-7">
+        <button class="scan-to-take-attendance" onclick="window.location.href='{% url 'admin_custom/manage_slot' %}'">Add slot</button>
+      </div>
+    </div>
+    <div class="div">
+      <div class="table">
+            <!-- Filter Field -->
+            <div class="align">
+              <div class="h-5">
+                  <div class="slot2">Current Slots</div>
+              </div>
+              <input type="text" id="search-input" class="filter-input" placeholder="Filter by name, roll, or email..." onkeyup="filterTableRows()">
+          </div>
+          <div class="tr">
+              <div class="th">
+                  <div class="div2">#</div>
+              </div>
+              <div class="th2">
+                  <div class="slot-id">Slot ID</div>
+              </div>
+              <div class="th3">
+                  <div class="timing">Day</div>
+              </div>
+              <div class="th4">
+                  <div class="day">Start Time</div>
+              </div>
+              <div class="th4">
+                  <div class="day">Duration</div>
+              </div>
+              <div class="th5">
+                  <div class="action">Action</div>
+              </div>
+          </div>
+          <div id="slots-table-body" class="tbody">
+              <!-- Slot rows will be dynamically inserted here -->
+          </div>
+      </div>
+  </div>
+</div>
+  
+<script>
+  // Function to fetch all slots and display them in the table
+  async function fetchSlots() {
+      try {
+          const response = await fetch('/api/slot/admin/get-all/');
+          const slots = await response.json();
+
+          const tableBody = document.getElementById('slots-table-body');
+          tableBody.innerHTML = '';  // Clear any previous data
+
+          slots.forEach((slot, index) => {
+              // Calculate duration from start and end time (optional, if needed)
+              const duration = slot.duration || '--';  // Default to '--' if duration is not available
+
+              // Create a new table row for each slot
+              const tr = document.createElement('div');
+              tr.classList.add('tr2');
+              
+              tr.innerHTML = `
+                  <div class="_1">${index + 1}</div>
+                  <div class="a-1">${slot.id}</div>
+                  <div class="_8-30">${slot.day}</div>
+                  <div class="monday">${slot.start_time}</div>
+                  <div class="monday">${duration}</div>
+                  <div class="frame-8">
+                    <button class="delete-btn" onclick="deleteSlot('${slot.id}')">
+                      <img class="trash-2" src="{% static 'admin/trash-20.svg' %}" />
+                    </button>
+                  </div>
+              `;
+              
+              // Append the new row to the table body
+              tableBody.appendChild(tr);
+          });
+      } catch (error) {
+          console.error("Error fetching slots:", error);
+      }
+  }
+
+  // Function to delete a slot based on its ID
+  async function deleteSlot(slotId) {
+
+      const metaContent = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = metaContent;
+      const csrfToken = tempDiv.querySelector('input').value;
+
+      console.log(csrfToken);
+
+      try {
+          const response = await fetch(`/api/slot/admin/${slotId}/delete/`, {
+              method: 'DELETE',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': csrfToken 
+              }
+          });
+
+          if (response.ok) {
+              alert('Slot deleted successfully!');
+              fetchSlots();  // Refresh the table
+          } else {
+              const errorData = await response.json();
+              alert('Failed to delete slot: ' + JSON.stringify(errorData));
+          }
+      } catch (error) {
+          alert('An error occurred: ' + error.message);
+      }
+  }
+
+  // Function to filter table rows based on input value
+  function filterTableRows() {
+    const filter = document.getElementById('search-input').value.toLowerCase();
+    const rows = document.querySelectorAll('#slots-table-body .tr2');
+
+    rows.forEach(row => {
+        const idCell = row.querySelector('.a-1').textContent.toLowerCase();
+        const dayCell = row.querySelector('._8-30').textContent.toLowerCase();
+        const startTimeCell = row.querySelector('.monday').textContent.toLowerCase();
+        const durationCell = row.querySelector('.monday').textContent.toLowerCase();
+
+        // Check if any of the cells match the filter text
+        if (idCell.includes(filter) || dayCell.includes(filter) || startTimeCell.includes(filter) || durationCell.includes(filter)) {
+            row.style.display = '';  // Show row if it matches
+        } else {
+            row.style.display = 'none';  // Hide row if it doesn't match
+        }
+    });
+  }
+
+  // Fetch slots when the page loads
+  window.onload = fetchSlots;
+</script>
+
+
+{% endblock %}
+
+{% block css %}
+
+<style>
+
+
+.content,
+.content * {
+  box-sizing: border-box;
+}
+.content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.bread-crumb {
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 50px;
+  position: relative;
+}
+.slot {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 24px;
+  line-height: 28.8px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.align {
+  display: flex;
+  justify-content: space-between; /* Distributes space between items */
+  align-items: center;
+  padding: 10px 0;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.h-5 .slot2 {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.filter-input {
+  padding: 8px 12px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  background-color: #f9f9f9;
+}
+
+.filter-input:focus {
+  border: 1px solid #007bff; /* Focus border color */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Focus shadow */
+}
+.ol {
+  width: 1152px;
+  height: 21px;
+  position: absolute;
+  left: 0px;
+  top: 28.8px;
+}
+.manage-slot {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0.2px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.add-button-coontainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.component-7 {
+  background: #0d6efd;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: auto;
+  height: 45px;
+  position: relative;
+}
+.component-7:hover {
+  background-color: #5f6ef1; /* Lighter background on hover */
+}
+.scan-to-take-attendance {
+  color: #ffffff !important;
+    text-align: left;
+    font-family: "Nunito", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    position: relative;
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s; /* Transition effect */
+}
+.div {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.h-5 {
+  padding: 20px 0px 14.59px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 78px;
+  position: relative;
+}
+.slot2 {
+  color: #012970;
+  text-align: left;
+  font-family: "Poppins-Medium", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.frame-37 {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+}
+.input {
+  border-radius: 2.5px;
+  border-style: solid;
+  border-color: #767676;
+  border-width: 1px;
+  padding: 9px 14px 9px 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.div-placeholder {
+  padding: 0px 121px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.search {
+  color: #757575;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tr {
+  background: #f6f6fe;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.th {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 76.22px 11.8px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 58px;
+  position: relative;
+}
+.div2 {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th2 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 146.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.slot-id {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th3 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 149.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.timing {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th4 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 182.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.day {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.frame-36 {
+  flex-shrink: 0;
+  width: 121px;
+  height: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.th5 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 158.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.action {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tbody {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.tr2 {
+  padding: 10px 8px 10px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+._1 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  width: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.a-1 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._8-30 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.monday {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.frame-8 {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.edit {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.trash-2 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.a-2 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._9-30 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.wednesday {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.edit2 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.trash-22 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.a-3 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._10-30 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.saturday {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.edit3 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.trash-23 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+
+
+</style>
+
+{% endblock %}

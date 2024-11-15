@@ -1,0 +1,668 @@
+{% extends 'student/master.html' %}
+
+{% block content %}
+
+<div class="content">
+  <div class="bread-crumb">
+    <div class="dashbaord">View Attendance</div>
+    <div class="ol">
+      <a href="{% url 'student/dashboard' %}">
+      <div class="track">Home</div>
+      </a>
+      <div class="li">
+        <div class="div">/</div>
+        <div class="attendance">View Attendance</div>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <div class="course-select-wrapper">
+    <form method="get" action="{% url 'student/view_attendance' %}">
+
+        <div class="course-select">
+          <div class="col-1">
+            <label for="course-select" class="subject">Subject</label>
+            <select id="course-select" name="course_code" class="advance-java">
+                {% for course in courses %}
+                    <option value="{{ course.code }}" {% if course.code == student_info.course_code %}selected{% endif %}>
+                        {{ course.code}} {{ course.name }}
+                    </option>
+                {% endfor %}
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="component-7">
+          <div class="generate-sheet">Generate Sheet</div>
+        </button>
+    </form>
+</div>
+
+  <!-- student/view_attendance.html -->
+<div class="attendance-container">
+  <div class="attendance-table">
+    <div class="table-header">
+      <div class="report-title">Subject Report for {{ student_info.course_code }}</div>
+    </div>
+    
+    <!-- Table Header Row -->
+    <div class="table-row table-header-row">
+      <div class="table-cell header-cell">#</div>
+      <div class="table-cell header-cell">Student Roll</div>
+      <div class="table-cell header-cell">Date</div>
+      <div class="table-cell header-cell">Status</div>
+    </div>
+    
+    <!-- Table Body Rows -->
+    <div class="table-body">
+      {% for record in student_info.attendance_records %}
+      <div class="table-row {% if record.status == 0 %}absent-row{% endif %}">
+        <div class="table-cell">{{ forloop.counter }}</div>
+        <div class="table-cell">{{ student_info.roll }}</div>
+        <div class="table-cell">{{ record.date }}</div>
+        <div class="table-cell">
+          {% if record.status == 1 %}
+            Present
+          {% else %}
+            Absent
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <div class="table-row">
+        <div class="table-cell" colspan="4">No attendance records available.</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+  
+  
+</div>
+
+
+{% endblock %}
+
+{% block css %}
+
+<style>
+
+  /* Container styling */
+  .attendance-container {
+    background-color: white;
+    width: 80%;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Table styling */
+  .attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* Header styling */
+  .table-header {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+  }
+  .report-title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  /* Row styling */
+  .table-row {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+  }
+  .table-header-row {
+    background-color: #e0e0e0;
+  }
+  .absent-row {
+    background-color: #ffe6e6;  /* Light red for absent */
+  }
+
+  /* Cell styling */
+  .table-cell {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    font-size: 1em;
+  }
+  .header-cell {
+    font-weight: bold;
+  }
+
+  /* Responsive design */
+  @media (max-width: 600px) {
+    .attendance-container {
+      width: 100%;
+    }
+    .table-cell {
+      font-size: 0.9em;
+    }
+  }
+
+
+.content,
+.content * {
+  box-sizing: border-box;
+}
+.content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.bread-crumb {
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 50px;
+  position: relative;
+  overflow: hidden;
+}
+.dashbaord {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 28.8px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ol {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 0px;
+  top: 28.8px;
+}
+.track {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.li {
+  padding: 0px 0px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 7.17px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.div {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.attendance {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.course-select-wrapper,
+.course-select-wrapper * {
+  box-sizing: border-box;
+}
+.course-select-wrapper {
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 25px;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.course-select {
+  border-radius: 8px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  padding: 15px 20px 15px 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.col-1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.subject {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.advance-java {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.vector {
+  flex-shrink: 0;
+  width: 9px;
+  height: 4.5px;
+  position: relative;
+  overflow: visible;
+}
+.component-7 {
+  background: #4154f1;
+  border-radius: 8px;
+  padding: 15px 20px 15px 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.generate-sheet {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  font-weight: 400;
+  position: relative;
+}
+
+.user-details,
+.user-details * {
+  box-sizing: border-box;
+}
+.user-details {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.h-5 {
+  padding: 10px 0px 10px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.subject-report {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito-Medium", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tr {
+  background: #f6f6fe;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.th {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 76.22px 11.8px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 58px;
+  position: relative;
+}
+.div {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th2 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 146.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.student-name {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th3 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 182.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.semester {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.total-present-day {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th4 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 158.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.total-absence-day {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tbody {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.tr2 {
+  background: #ffffff;
+  padding: 10px 8px 10px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+._1 {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  width: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.maria {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.first {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._10-2-2024 {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.present {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tr3 {
+  background: #ffc6c6;
+  padding: 10px 8px 10px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.maria2 {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._11-2-2024 {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.absent {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+</style>
+
+{% endblock %}

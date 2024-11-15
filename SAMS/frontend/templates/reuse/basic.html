@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content='{% csrf_token %}'>
+  
+  <link rel="stylesheet" href="{% static 'teacher/vars.css' %}">
+  <link rel="stylesheet" href="{% static 'teacher/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+  {% block css %} {% endblock %}
+  <style>
+    a,
+    button,
+    input,
+    select,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border: none;
+      text-decoration: none;
+      background: none;
+      font-family: "Nunito", sans-serif;
+
+      -webkit-font-smoothing: antialiased;
+    }
+
+    menu,
+    ol,
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .teacher-sidebar .a.active, .teacher-sidebar .a2.active {
+      background-color: #F6F9FF;
+    color: #4154F1;
+    font-weight: bold;
+  }
+  
+  </style>
+  <title>{% block title %} {% endblock %}</title>
+</head>
+
+
+<body>
+
+  <div class="responsive">
+    <div class="wrapper">
+      <div class="header">
+        <div class="name"><a href="{% url 'teacher/profile' %}">{{ teacher_name }} ({{ teacher_id }})</a></div>
+        <div class="sams"><a href="{% url 'teacher/courses' %}">SAMS</a></div>
+      </div>
+      <div class="body">
+      <div class="teacher-sidebar">
+        <div class="ul">
+          <div class="track">Track</div>
+          <div class="a2 {% if request.path == '/teacher/courses/' %}active{% endif %}">
+            <img src="{% static 'student/ph-student-bold0.svg' %}" />
+            <div class="take_attendance"><a href="{% url 'teacher/courses/courses_attendance/take_attendance' %}">Take Attendance</a></div>
+          </div>
+          <div class="a-nalyze">Analyze</div>
+          <div class="a {% if request.path == '/home/' %}active{% endif %}">
+            <img src="{% static 'student/material-symbols-table-chart-view-outline-rounded0.svg' %}" />
+            <div class="dashboard"><a href="{% url 'teacher/courses' %}">Dashboard</a></div>
+          </div>
+          <!-- <div class="a {% if request.path == '/home/' %}active{% endif %}">
+            <img src="{% static 'student/carbon-report0.svg' %}" />
+            <div class="report"><a href="{% url 'home' %}">Report</a></div>
+          </div> -->
+          <div class="manage">Manage</div>
+          <!-- <div class="a2 {% if request.path == '/teacher/manage_attendance/' %}active{% endif %}">
+            <img src="{% static 'student/ph-student-bold0.svg' %}" />
+            <div class="profile"><a href="{% url 'teacher/manage_attendance' %}">Manage Attendance</a></div>
+          </div> -->
+          <div class="a2 {% if request.path == '/teacher/profile/' %}active{% endif %}">
+            <img src="{% static 'student/ph-student-bold0.svg' %}" />
+            <div class="profile"><a href="{% url 'teacher/profile' %}">Profile</a></div>
+          </div>
+          <div class="exit">exit</div>
+          <div class="a2 {% if request.path == '/home/' %}active{% endif %}">
+            <img src="{% static 'student/icon-park-outline-logout0.svg' %}" />
+            <div class="logout"><a href="{% url 'logout' %}">Logout</a></div>
+          </div>
+        </div>
+      </div>
+
+      {% block content %} {% endblock %}
+      
+      </div>
+      <div class="footer">
+        <div class="copyright">
+          <div class="c-2024-sams-all-rights-resered">
+            C 2024 SAMS All rights resered
+          </div>
+        </div>
+        <div class="links">
+          <div class="privacy-policy">Privacy Policy</div>
+          <div class="terms-of-service">Terms of Service</div>
+          <div class="contact-us">Contact Us</div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% block scripts %} {% endblock %}
+
+</body>
+
+</html>

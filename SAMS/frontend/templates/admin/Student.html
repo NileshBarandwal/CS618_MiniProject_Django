@@ -1,0 +1,800 @@
+{% extends 'admin/master.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+    <div class="bread-crumb">
+        <div class="student">Student</div>
+        <div class="ol">
+            <div class="manage">Manage</div>
+            <div class="li">
+                <div class="div">/</div>
+                <div class="student2">Student</div>
+            </div>
+        </div>
+    </div>
+    <div class="add-button-coontainer">
+        <div class="component-7">
+            <button class="scan-to-take-attendance" onclick="window.location.href='{% url 'admin_custom/student_add_subject' %}'">Add Student</button>
+        </div>
+    </div>
+    
+    <div class="div2">
+        <div class="table">
+                <!-- Filter Field -->
+                <div class="align">
+                  <div class="h-5">
+                      <div class="current-student">Current Student</div>
+                  </div>
+                  <input type="text" id="search-input" class="filter-input" placeholder="Filter by name, roll, or email..." onkeyup="filterTableRows()">
+              </div>
+              
+            <div class="tr">
+                <div class="th">
+                    <div class="div3">#</div>
+                </div>
+                <div class="th2">
+                    <div class="student-name">Roll</div>
+                </div>
+                <div class="th3">
+                    <div class="course">Name</div>
+                </div>
+                <div class="th4">
+                    <div class="email">Email</div>
+                </div>
+                <div class="th5">
+                    <div class="action">Action</div>
+                </div>
+            </div>
+            <div id="students-table-body" class="tbody">
+                <!-- Student rows will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to fetch all students and display them in the table
+    async function fetchStudents() {
+        try {
+            const response = await fetch('/api/student/admin/get-all/');
+            const students = await response.json();
+
+            // Sort students by roll number in ascending order
+            students.sort((a, b) => a.roll.localeCompare(b.roll));
+
+            const tableBody = document.getElementById('students-table-body');
+            tableBody.innerHTML = '';  // Clear any previous data
+
+            students.forEach((student, index) => {
+                // Create a new table row for each student
+                const tr = document.createElement('div');
+                tr.classList.add('tr2');
+                
+                tr.innerHTML = `
+                    <div class="_1">${index + 1}</div>
+                    <div class="manoj-baj">${student.roll}</div>
+                    <div class="bit">${student.name}</div>
+                    <div class="manoj-2-gmail">${student.email}</div>
+                    <div class="frame-8">
+                      <button class="delete-btn" onclick="deleteStudent('${student.roll}')">
+                        <img class="trash-2" src="{% static 'admin/trash-20.svg' %}" />
+                      </button>
+                    </div>
+                `;
+                
+                // Append the new row to the table body
+                tableBody.appendChild(tr);
+            });
+        } catch (error) {
+            console.error("Error fetching students:", error);
+        }
+    }
+
+    // Function to delete a student based on their ID
+    async function deleteStudent(studentId) {
+      const metaContent = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = metaContent;
+      const csrfToken = tempDiv.querySelector('input').value;
+
+      console.log(csrfToken);
+      console.log(studentId);
+
+        try {
+            const response = await fetch(`/api/student/admin/${studentId}/delete/`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken 
+                }
+            });
+
+            if (response.ok) {
+                alert('Student deleted successfully!');
+                fetchStudents();  // Refresh the table
+            } else {
+                const errorData = await response.json();
+                alert('Failed to delete student: ' + JSON.stringify(errorData));
+            }
+        } catch (error) {
+            alert('An error occurred: ' + error.message);
+        }
+    }
+
+    // Filter table rows based on the input in the search field
+    function filterTableRows() {
+      const filterValue = document.getElementById('search-input').value.toLowerCase();
+      const rows = document.getElementById('students-table-body').getElementsByClassName('tr2');
+
+      Array.from(rows).forEach(row => {
+          const roll = row.querySelector('.manoj-baj').textContent.toLowerCase();
+          const name = row.querySelector('.bit').textContent.toLowerCase();
+          const email = row.querySelector('.manoj-2-gmail').textContent.toLowerCase();
+
+          if (roll.includes(filterValue) || name.includes(filterValue) || email.includes(filterValue)) {
+              row.style.display = '';  // Show the row
+          } else {
+              row.style.display = 'none';  // Hide the row
+          }
+      });
+  }
+
+    // Fetch students when the page loads
+    window.onload = fetchStudents;
+</script>
+
+{% endblock %}
+
+{% block css %}
+
+<style>
+
+.content,
+.content * {
+  box-sizing: border-box;
+}
+.content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.bread-crumb {
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 50px;
+  position: relative;
+}
+.student {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 24px;
+  line-height: 28.8px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.align {
+  display: flex;
+  justify-content: space-between; /* Distributes space between items */
+  align-items: center;
+  padding: 10px 0;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.h-5 .current-student {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.filter-input {
+  padding: 8px 12px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  background-color: #f9f9f9;
+}
+
+.filter-input:focus {
+  border: 1px solid #007bff; /* Focus border color */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Focus shadow */
+}
+.ol {
+  width: 1152px;
+  height: 21px;
+  position: absolute;
+  left: 0px;
+  top: 29px;
+}
+.manage {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.li {
+  padding: 0px 0px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 7.17px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 51px;
+  top: 0.2px;
+}
+.div {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.student2 {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.add-button-coontainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.component-7 {
+  background: #0d6efd;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: auto;
+  height: 45px;
+  position: relative;
+}
+.component-7:hover {
+  background-color: #5f6ef1; /* Lighter background on hover */
+}
+.scan-to-take-attendance {
+  color: #ffffff !important;
+    text-align: left;
+    font-family: "Nunito", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    position: relative;
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s; /* Transition effect */
+}
+.div2 {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.h-5 {
+  padding: 20px 0px 14.59px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.current-student {
+  color: #012970;
+  text-align: left;
+  font-family: "Poppins-Medium", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.input {
+  border-radius: 2.5px;
+  border-style: solid;
+  border-color: #767676;
+  border-width: 1px;
+  padding: 9px 14px 9px 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.div-placeholder {
+  padding: 0px 121px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.search {
+  color: #757575;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tr {
+  background: #f6f6fe;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.th {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 76.22px 11.8px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 58px;
+  position: relative;
+}
+.div3 {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th2 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 146.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.student-name {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th3 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 149.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.course {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th4 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 182.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.email {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.username {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.password {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th5 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 158.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.action {
+  color: #444444;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tbody {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.tr2 {
+  padding: 10px 8px 10px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+._1 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  width: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.manoj-baj {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.bit {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.manoj-2-gmail {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.manoj-baj2 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.manoj {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.frame-8 {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.edit {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.trash-2 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.mario-db {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.mario-gmail-com {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.parakas {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.edit2 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.trash-22 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.kiara-advani {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.kiara-gmail-com {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.kiara {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.manag {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.edit3 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.trash-23 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+
+
+
+</style>
+
+{% endblock %}

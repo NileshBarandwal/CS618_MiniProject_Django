@@ -1,0 +1,465 @@
+openapi: 3.0.0
+info:
+  title: Student Attendance Management System APIs
+  version: v1
+  description: APIs for managing students, teachers, courses, attendance, slots, course slots, course teachers, and TAs.
+  termsOfService: https://www.google.com/policies/terms/
+  contact:
+    email: cs24mt018@iitdh.ac.in
+  license:
+    name: SAMS
+
+servers:
+  - url: http://127.0.0.1:8000
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Student:
+      type: object
+      properties:
+        roll:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+      required:
+        - roll
+        - name
+        - email
+
+    Teacher:
+      type: object
+      properties:
+        teacher_id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+      required:
+        - teacher_id
+        - name
+        - email
+
+    Course:
+      type: object
+      properties:
+        course_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+      required:
+        - course_id
+        - title
+
+    Attendance:
+      type: object
+      properties:
+        attendance_id:
+          type: string
+        student_id:
+          type: string
+        course_id:
+          type: string
+        date:
+          type: string
+          format: date
+        status:
+          type: string
+      required:
+        - attendance_id
+        - student_id
+        - course_id
+        - date
+        - status
+
+    Slot:
+      type: object
+      properties:
+        slot_id:
+          type: string
+        time:
+          type: string
+      required:
+        - slot_id
+        - time
+
+    CourseSlot:
+      type: object
+      properties:
+        course_slot_id:
+          type: string
+        course_id:
+          type: string
+        slot_id:
+          type: string
+      required:
+        - course_slot_id
+        - course_id
+        - slot_id
+
+    CourseTeacher:
+      type: object
+      properties:
+        course_teacher_id:
+          type: string
+        course_id:
+          type: string
+        teacher_id:
+          type: string
+      required:
+        - course_teacher_id
+        - course_id
+        - teacher_id
+
+    TA:
+      type: object
+      properties:
+        ta_id:
+          type: string
+        name:
+          type: string
+        course_id:
+          type: string
+      required:
+        - ta_id
+        - name
+        - course_id
+
+paths:
+  /api/students/:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Retrieve a list of students or a specific student by ID
+      parameters:
+        - name: student_id
+          in: query
+          required: false
+          description: Optional ID of the student to retrieve (e.g., "stu001").
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of students or a specific student
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+    post:
+      security:
+        - BearerAuth: []
+      summary: Create a new student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        201:
+          description: Student created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        400:
+          description: Bad Request
+
+  /api/teachers/:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Retrieve a list of teachers or a specific teacher by ID
+      parameters:
+        - name: teacher_id
+          in: query
+          required: false
+          description: Optional ID of the teacher to retrieve (e.g., "ep001").
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of teachers or a specific teacher
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Teacher'
+    post:
+      security:
+        - BearerAuth: []
+      summary: Create a new teacher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+      responses:
+        201:
+          description: Teacher created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+        400:
+          description: Bad Request
+
+  /api/courses/:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Retrieve a list of courses or a specific course by ID
+      parameters:
+        - name: course_id
+          in: query
+          required: false
+          description: Optional ID of the course to retrieve (e.g., "cs101").
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of courses or a specific course
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+    post:
+      security:
+        - BearerAuth: []
+      summary: Create a new course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        201:
+          description: Course created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        400:
+          description: Bad Request
+
+  /api/attendance/:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Retrieve attendance records or a specific record by ID
+      parameters:
+        - name: attendance_id
+          in: query
+          required: false
+          description: Optional ID of the attendance record to retrieve (e.g., "att001").
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of attendance records or a specific record
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attendance'
+    post:
+      security:
+        - BearerAuth: []
+      summary: Create a new attendance record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attendance'
+      responses:
+        201:
+          description: Attendance record created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+        400:
+          description: Bad Request
+
+  /api/slots/:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Retrieve a list of slots or a specific slot by ID
+      parameters:
+        - name: slot_id
+          in: query
+          required: false
+          description: Optional ID of the slot to retrieve (e.g., "slot001").
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of slots or a specific slot
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Slot'
+    post:
+      security:
+        - BearerAuth: []
+      summary: Create a new slot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Slot'
+      responses:
+        201:
+          description: Slot created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Slot'
+        400:
+          description: Bad Request
+
+  /api/course-slots/:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Retrieve a list of course slots or a specific course slot by ID
+      parameters:
+        - name: course_slot_id
+          in: query
+          required: false
+          description: Optional ID of the course slot to retrieve (e.g., "cs_slot001").
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of course slots or a specific course slot
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseSlot'
+    post:
+      security:
+        - BearerAuth: []
+      summary: Create a new course slot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseSlot'
+      responses:
+        201:
+          description: Course slot created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseSlot'
+        400:
+          description: Bad Request
+
+  /api/course-teachers/:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Retrieve a list of course teachers or a specific course teacher by ID
+      parameters:
+        - name: course_teacher_id
+          in: query
+          required: false
+          description: Optional ID of the course teacher to retrieve (e.g., "ct001").
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of course teachers or a specific course teacher
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseTeacher'
+    post:
+      security:
+        - BearerAuth: []
+      summary: Assign a teacher to a course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseTeacher'
+      responses:
+        201:
+          description: Course teacher assigned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseTeacher'
+        400:
+          description: Bad Request
+
+  /api/ta/:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Retrieve a list of TAs or a specific TA by ID
+      parameters:
+        - name: ta_id
+          in: query
+          required: false
+          description: Optional ID of the TA to retrieve (e.g., "ta001").
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of TAs or a specific TA
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TA'
+    post:
+      security:
+        - BearerAuth: []
+      summary: Create a new TA
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TA'
+      responses:
+        201:
+          description: TA created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TA'
+        400:
+          description: Bad Request

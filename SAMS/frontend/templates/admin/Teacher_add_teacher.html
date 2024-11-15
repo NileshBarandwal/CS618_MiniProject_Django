@@ -1,0 +1,653 @@
+{% extends 'admin/master.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+    <div class="bread-crumb">
+        <div class="teacher">Teacher</div>
+        <div class="ol">
+            <div class="manage">Manage</div>
+            <div class="li">
+                <div class="div">/</div>
+                <div class="add-teacher">Add Teacher</div>
+            </div>
+            <div class="li2">
+                <div class="div">/</div>
+                <div class="teacher2">Teacher</div>
+            </div>
+        </div>
+    </div>
+    <div class="form">
+        <div class="div2">
+            <div class="add-a-teacher">Add a teacher</div>
+            <div class="form2">
+                <div class="div-placeholder">
+                    <div class="div3">
+                        <div class="subject-name">Teacher ID</div>
+                        <input type="text" id="teacher-id" class="input-field" placeholder="Enter teacher ID (e.g., T001)" required>
+                    </div>
+                </div>
+                <div class="frame-27">
+                    <div class="div4">
+                        <div class="subject-name">Full Name</div>
+                        <input type="text" id="teacher-name" class="input-field" placeholder="Enter full name" required>
+                    </div>
+                    <div class="div-placeholder2">
+                        <div class="div5">
+                            <div class="subject-name">Password</div>
+                            <input type="password" id="teacher-password" class="input-field" placeholder="Password" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="div6">
+                    <div class="subject-name">Email</div>
+                    <input type="email" id="teacher-email" class="input-field" placeholder="Enter email" required>
+                </div>
+                <div class="div7">
+                    <button type="button" class="button" onclick="submitTeacherForm()"><span class="submit">Submit</span></button>
+                    <button type="reset" class="button2"><span class="reset">Reset</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitTeacherForm() {
+        const teacherData = {
+            id: document.getElementById('teacher-id').value,
+            name: document.getElementById('teacher-name').value,
+            email: document.getElementById('teacher-email').value,
+            password: document.getElementById('teacher-password').value
+        };
+
+        const metaContent = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        // Create a temporary div element to parse the HTML string
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = metaContent;
+
+        // Get the input element from the parsed HTML
+        const csrfToken = tempDiv.querySelector('input').value;
+
+        console.log(csrfToken);
+
+        fetch('/api/teacher/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken // Django's CSRF token for security
+            },
+            body: JSON.stringify(teacherData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.id) {
+                alert("Teacher added successfully!");
+                document.getElementById('teacher-id').value = '';
+                document.getElementById('teacher-name').value = '';
+                document.getElementById('teacher-email').value = '';
+                document.getElementById('teacher-password').value = '';
+            } else {
+                alert("Failed to add teacher: " + JSON.stringify(data));
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+</script>
+
+{% endblock %}
+
+
+{% block css %}
+
+<style>
+
+.content,
+.content * {
+  box-sizing: border-box;
+}
+.content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.bread-crumb {
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 50px;
+  position: relative;
+}
+
+.beta {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.input-field {
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  padding: 7px 12px;
+  width: 100%; /* Full width */
+  height: 36px;
+  color: #6c757d;
+  font-size: 16px;
+  font-family: "Nunito", sans-serif;
+}
+
+.subject-name, .old-password, .new-password {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.teacher {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 24px;
+  line-height: 28.8px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ol {
+  width: 1152px;
+  height: 21px;
+  position: absolute;
+  left: 0px;
+  top: 28.8px;
+}
+.manage {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.li {
+  padding: 0px 0px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 7.17px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 121px;
+  top: -0.8px;
+}
+.div {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.add-teacher {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.li2 {
+  padding: 0px 0px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 7.17px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 51px;
+  top: 0.2px;
+}
+.teacher2 {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.form {
+  background: #ffffff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: auto;
+  position: relative;
+  box-shadow: 0px 0px 30px 0px rgba(1, 41, 112, 0.1);
+}
+.div2 {
+  padding: 20px 12px 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.add-a-teacher {
+  color: #012970;
+  text-align: left;
+  font-family: "Poppins-Medium", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.form2 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.div-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 533px;
+  height: 70px;
+  position: relative;
+}
+.div3 {
+  padding: 0px 8px 0px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  width: 540px;
+  position: relative;
+}
+.full-name {
+  color: #444444;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.input-input-password-5 {
+  background: #ffffff;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  padding: 0px 10px 0px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 36px;
+  position: relative;
+}
+.name {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: absolute;
+  right: 20px;
+  top: calc(50% - 10px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.frame-27 {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 540px;
+  position: relative;
+}
+.div4 {
+  flex: 1;
+  height: 70px;
+  position: relative;
+}
+.username {
+  color: #444444;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 8px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.input-input-email-5 {
+  background: #ffffff;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  height: 36px;
+  position: absolute;
+  right: 9px;
+  left: 9px;
+  top: 33px;
+}
+.username2 {
+  color: #6c757d;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  position: absolute;
+  left: 8px;
+  top: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div-placeholder2 {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  height: 70px;
+  position: relative;
+}
+.div5 {
+  padding: 0px 8px 0px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+}
+.password {
+  color: #444444;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.input-input-email-52 {
+  background: #ffffff;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+}
+.password2 {
+  color: #6c757d;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  position: absolute;
+  left: 4px;
+  top: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div6 {
+  flex-shrink: 0;
+  width: 540px;
+  height: 70px;
+  position: relative;
+}
+.email {
+  color: #444444;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 8px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.input-input-addres-5-s {
+  background: #ffffff;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  padding: 7px 12px 7px 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  right: 9px;
+  left: 9px;
+  top: 33px;
+}
+.div-placeholder3 {
+  padding: 0px 401px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.sam-gmail-com {
+  color: #6c757d;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.address {
+  color: #444444;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 8px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.input-input-address-2 {
+  background: #ffffff;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  padding: 7px 12px 7px 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  right: 9px;
+  left: 9px;
+  top: 33px;
+}
+.div-placeholder4 {
+  padding: 0px 298px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.apartment-studio-or-floor {
+  color: #6c757d;
+  text-align: left;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div7 {
+  padding: 0px 8px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.submit {
+  color: #ffffff;
+  text-align: center;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset {
+  color: #ffffff;
+  text-align: center;
+  font-family: "OpenSans-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button, .button2 {
+  border-radius: 6px;
+  border: none;
+  padding: 7px 12.94px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.button {
+  background: #0d6efd;
+  color: #ffffff;
+}
+
+.button2 {
+  background: #6c757d;
+  color: #ffffff;
+}
+
+.button:hover, .button2:hover {
+  opacity: 0.8; /* Slightly dim on hover */
+}
+
+
+
+</style>
+
+{% endblock %}

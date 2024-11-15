@@ -1,0 +1,24 @@
+# Python
+*.pyc
+__pycache__/
+
+# Django
+db.sqlite3
+*.log
+*.pot
+*.egg-info/
+*.eggs/
+
+# Virtual Environment
+venv/
+# or if you named your virtual environment differently
+# myenv/
+
+# Environment Variables
+.env
+
+# Other files you might want to ignore
+*.sqlite3
+*.pyc
+.DS_Store
+

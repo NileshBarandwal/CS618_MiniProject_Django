@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content='{% csrf_token %}'>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'student/vars.css' %}">
+  <link rel="stylesheet" href="{% static 'student/style.css' %}">
+  
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  
+  {% block css %} {% endblock %}
+  
+  <style>
+    a,
+    button,
+    input,
+    select,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border: none;
+        text-decoration: none;
+        background: none;
+    
+        -webkit-font-smoothing: antialiased;
+    }
+    
+    menu, ol, ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    </style>
+   <title>Document</title>
+ </head>
+ <body>
+   <div class="responsive">
+     <div class="wrapper">
+       <div class="header">
+         <div class="name"><a href="{% url 'student/profile' %}">{{ student_name }} ({{ student_roll }})</a></div>
+         <div class="sams"><a href="{% url 'student' %}">SAMS</a></div>
+       </div>
+       <div class="body">
+        <div class="student-sidebar">
+          <div class="ul">
+            <div class="a-nalyze">ANalyze</div>
+            <div class="a {% if request.path == '/student/' %}active{% endif %}">
+              <img src="{% static 'student/material-symbols-table-chart-view-outline-rounded0.svg' %}" />
+              <div class="dashboard"><a href="{% url 'student' %}">Dashboard</a></div>
+            </div>
+            <div class="manage">Manage</div>
+            <div class="a2 {% if request.path == '/student/profile/' %}active{% endif %}">
+              <img src="{% static 'student/ph-student-bold0.svg' %}" />
+              <div class="profile"><a href="{% url 'student/profile' %}">Profile</a></div>
+            </div>
+            <div class="exit">EXIT</div>
+            <div class="a2 {% if request.path == '/home/' %}active{% endif %}">
+              <img src="{% static 'student/icon-park-outline-logout0.svg' %}" />
+              <div class="logout"><a href="{% url 'logout' %}">Logout</a></div>
+            </div>
+            <div class="ta-section">TA SECTION</div>
+            <div class="a2 {% if request.path == '/student/take_attendance/' %}active{% endif %}">
+              <img src="{% static 'student/group0.svg' %}" />
+              <div class="take-attendance"><a href="{% url 'student/take_attendance' %}">Take Attendance</a></div>
+            </div>
+          </div>
+        </div>
+        
+
+         {% block content %} {% endblock %}
+
+
+       </div>
+       <div class="footer">
+         <div class="copyright">
+           <div class="c-2024-sams-all-rights-resered">
+             C 2024 SAMS All rights resered
+           </div>
+         </div>
+         <div class="links">
+           <div class="privacy-policy">Privacy Policy</div>
+           <div class="terms-of-service">Terms of Service</div>
+           <div class="contact-us">Contact Us</div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+   {% block scripts %} {% endblock %}
+   
+ </body>
+ </html>

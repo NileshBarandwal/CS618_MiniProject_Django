@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./vars.css">
+  <link rel="stylesheet" href="./style.css">
+  
+  
+  <style>
+   a,
+   button,
+   input,
+   select,
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   * {
+       box-sizing: border-box;
+       margin: 0;
+       padding: 0;
+       border: none;
+       text-decoration: none;
+       background: none;
+   
+       -webkit-font-smoothing: antialiased;
+   }
+   
+   menu, ol, ul {
+       list-style-type: none;
+       margin: 0;
+       padding: 0;
+   }
+   </style>
+  <title>Document</title>
+</head>
+<body>
+  <div class="enrollment">
+    <div class="sidebar">
+      <div class="ul-sidebar-nav">
+        <div class="a">
+          <img
+            class="material-symbols-table-chart-view-outline-rounded"
+            src="material-symbols-table-chart-view-outline-rounded0.svg"
+          />
+          <div class="dashboard">Dashboard</div>
+        </div>
+        <div class="manage">Manage</div>
+        <div class="a2">
+          <img
+            class="fa-solid-chalkboard-teacher"
+            src="fa-solid-chalkboard-teacher0.svg"
+          />
+          <div class="teacher">Teacher</div>
+        </div>
+        <div class="a3">
+          <img class="ph-student-bold" src="ph-student-bold0.svg" />
+          <div class="student">Student</div>
+        </div>
+        <div class="a4">
+          <div class="courses">Courses</div>
+          <img class="ic-round-menu-book" src="ic-round-menu-book0.svg" />
+        </div>
+        <div class="frame-32">
+          <div class="frame-33">
+            <div class="frame-34">
+              <div class="frame-38"></div>
+            </div>
+          </div>
+          <img class="file-dock-fill" src="file-dock-fill0.svg" />
+          <div class="slot">Slot</div>
+        </div>
+        <div class="enrollment2">
+          <div class="rectangle-21"></div>
+          <div class="course-enrollment">COURSE ENROLLMENT</div>
+        </div>
+        <div class="frame-29">
+          <img
+            class="fa-solid-chalkboard-teacher2"
+            src="fa-solid-chalkboard-teacher1.svg"
+          />
+          <div class="teacher2">Teacher</div>
+        </div>
+        <div class="frame-30">
+          <img class="ph-student-bold2" src="ph-student-bold1.svg" />
+          <div class="student2">Student</div>
+        </div>
+        <div class="frame-28"></div>
+        <div class="frame-36">
+          <div class="frame-33">
+            <div class="frame-34">
+              <div class="frame-38"></div>
+            </div>
+          </div>
+          <img class="file-dock-fill2" src="file-dock-fill1.svg" />
+          <div class="slot2">Slot</div>
+        </div>
+        <div class="ta-enrollment">TA ENROLLMENT</div>
+        <div class="frame-35">
+          <img class="ph-student-bold3" src="ph-student-bold2.svg" />
+          <div class="ta">TA</div>
+        </div>
+        <div class="exit">Exit</div>
+        <div class="a2">
+          <img
+            class="icon-park-outline-logout"
+            src="icon-park-outline-logout0.svg"
+          />
+          <div class="logout">Logout</div>
+          <div class="frame-31"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="ul-sidebar-nav">
+        <div class="a">
+          <img
+            class="material-symbols-table-chart-view-outline-rounded2"
+            src="material-symbols-table-chart-view-outline-rounded1.svg"
+          />
+          <div class="dashboard">Dashboard</div>
+        </div>
+        <div class="manage">Manage</div>
+        <div class="a2">
+          <img
+            class="fa-solid-chalkboard-teacher3"
+            src="fa-solid-chalkboard-teacher2.svg"
+          />
+          <div class="teacher">Teacher</div>
+        </div>
+        <div class="a3">
+          <img class="ph-student-bold4" src="ph-student-bold3.svg" />
+          <div class="student">Student</div>
+        </div>
+        <div class="a4">
+          <div class="courses">Courses</div>
+          <img class="ic-round-menu-book2" src="ic-round-menu-book1.svg" />
+        </div>
+        <div class="frame-32">
+          <div class="frame-33">
+            <div class="frame-34">
+              <div class="frame-38"></div>
+            </div>
+          </div>
+          <img class="file-dock-fill3" src="file-dock-fill2.svg" />
+          <div class="slot">Slot</div>
+        </div>
+        <div class="enrollment2">
+          <div class="rectangle-21"></div>
+          <div class="course-enrollment">COURSE ENROLLMENT</div>
+        </div>
+        <div class="frame-29">
+          <img
+            class="fa-solid-chalkboard-teacher4"
+            src="fa-solid-chalkboard-teacher3.svg"
+          />
+          <div class="teacher2">Teacher</div>
+        </div>
+        <div class="frame-30">
+          <img class="ph-student-bold5" src="ph-student-bold4.svg" />
+          <div class="student2">Student</div>
+        </div>
+        <div class="frame-28"></div>
+        <div class="frame-36">
+          <div class="frame-33">
+            <div class="frame-34">
+              <div class="frame-38"></div>
+            </div>
+          </div>
+          <img class="file-dock-fill4" src="file-dock-fill3.svg" />
+          <div class="slot2">Slot</div>
+        </div>
+        <div class="ta-enrollment">TA ENROLLMENT</div>
+        <div class="frame-35">
+          <img class="ph-student-bold6" src="ph-student-bold5.svg" />
+          <div class="ta">TA</div>
+        </div>
+        <div class="exit">Exit</div>
+        <div class="a2">
+          <img
+            class="icon-park-outline-logout2"
+            src="icon-park-outline-logout1.svg"
+          />
+          <div class="logout">Logout</div>
+          <div class="frame-31"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="ul-sidebar-nav">
+        <div class="a">
+          <img
+            class="material-symbols-table-chart-view-outline-rounded3"
+            src="material-symbols-table-chart-view-outline-rounded2.svg"
+          />
+          <div class="dashboard">Dashboard</div>
+        </div>
+        <div class="manage">Manage</div>
+        <div class="a2">
+          <img
+            class="fa-solid-chalkboard-teacher5"
+            src="fa-solid-chalkboard-teacher4.svg"
+          />
+          <div class="teacher">Teacher</div>
+        </div>
+        <div class="a3">
+          <img class="ph-student-bold7" src="ph-student-bold6.svg" />
+          <div class="student">Student</div>
+        </div>
+        <div class="a4">
+          <div class="courses">Courses</div>
+          <img class="ic-round-menu-book3" src="ic-round-menu-book2.svg" />
+        </div>
+        <div class="frame-32">
+          <div class="frame-33">
+            <div class="frame-34">
+              <div class="frame-38"></div>
+            </div>
+          </div>
+          <img class="file-dock-fill5" src="file-dock-fill4.svg" />
+          <div class="slot">Slot</div>
+        </div>
+        <div class="enrollment2">
+          <div class="rectangle-21"></div>
+          <div class="course-enrollment">COURSE ENROLLMENT</div>
+        </div>
+        <div class="frame-29">
+          <img
+            class="fa-solid-chalkboard-teacher6"
+            src="fa-solid-chalkboard-teacher5.svg"
+          />
+          <div class="teacher2">Teacher</div>
+        </div>
+        <div class="frame-30">
+          <img class="ph-student-bold8" src="ph-student-bold7.svg" />
+          <div class="student2">Student</div>
+        </div>
+        <div class="frame-28"></div>
+        <div class="frame-36">
+          <div class="frame-33">
+            <div class="frame-34">
+              <div class="frame-38"></div>
+            </div>
+          </div>
+          <img class="file-dock-fill6" src="file-dock-fill5.svg" />
+          <div class="slot2">Slot</div>
+        </div>
+        <div class="ta-enrollment">TA ENROLLMENT</div>
+        <div class="frame-35">
+          <img class="ph-student-bold9" src="ph-student-bold8.svg" />
+          <div class="ta">TA</div>
+        </div>
+        <div class="exit">Exit</div>
+        <div class="a2">
+          <img
+            class="icon-park-outline-logout3"
+            src="icon-park-outline-logout2.svg"
+          />
+          <div class="logout">Logout</div>
+          <div class="frame-31"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar2">
+      <div class="ul-sidebar-nav">
+        <div class="a">
+          <img
+            class="material-symbols-table-chart-view-outline-rounded4"
+            src="material-symbols-table-chart-view-outline-rounded3.svg"
+          />
+          <div class="dashboard">Dashboard</div>
+        </div>
+        <div class="manage">Manage</div>
+        <div class="a2">
+          <img
+            class="fa-solid-chalkboard-teacher7"
+            src="fa-solid-chalkboard-teacher6.svg"
+          />
+          <div class="teacher">Teacher</div>
+        </div>
+        <div class="a2">
+          <img class="ph-student-bold10" src="ph-student-bold9.svg" />
+          <div class="student3">Student</div>
+        </div>
+        <div class="a4">
+          <div class="courses">Courses</div>
+          <img class="ic-round-menu-book4" src="ic-round-menu-book3.svg" />
+        </div>
+        <div class="frame-32">
+          <div class="frame-33">
+            <div class="frame-34">
+              <div class="frame-38"></div>
+            </div>
+          </div>
+          <img class="file-dock-fill7" src="file-dock-fill6.svg" />
+          <div class="slot">Slot</div>
+        </div>
+        <div class="enrollment2">
+          <div class="rectangle-21"></div>
+          <div class="course-enrollment">COURSE ENROLLMENT</div>
+        </div>
+        <div class="frame-292">
+          <img
+            class="fa-solid-chalkboard-teacher8"
+            src="fa-solid-chalkboard-teacher7.svg"
+          />
+          <div class="teacher3">Teacher</div>
+        </div>
+        <div class="frame-302">
+          <img class="ph-student-bold11" src="ph-student-bold10.svg" />
+          <div class="student4">Student</div>
+        </div>
+        <div class="frame-28"></div>
+        <div class="frame-36">
+          <div class="frame-33">
+            <div class="frame-34">
+              <div class="frame-38"></div>
+            </div>
+          </div>
+          <img class="file-dock-fill8" src="file-dock-fill7.svg" />
+          <div class="slot2">Slot</div>
+        </div>
+        <div class="ta-enrollment">TA ENROLLMENT</div>
+        <div class="frame-35">
+          <img class="ph-student-bold12" src="ph-student-bold11.svg" />
+          <div class="ta">TA</div>
+        </div>
+        <div class="exit">Exit</div>
+        <div class="a2">
+          <img
+            class="icon-park-outline-logout4"
+            src="icon-park-outline-logout3.svg"
+          />
+          <div class="logout">Logout</div>
+          <div class="frame-31"></div>
+        </div>
+      </div>
+    </div>
+    <div class="header-header">
+      <div class="div">
+        <div class="a5">
+          <div class="attendify">SAMS</div>
+        </div>
+      </div>
+      <div class="form">
+        <div class="input">
+          <div class="div-placeholder">
+            <div class="search">Search</div>
+          </div>
+        </div>
+        <div class="div2"></div>
+      </div>
+      <div class="ul">
+        <div class="a6">
+          <img class="bell" src="bell0.svg" />
+          <div class="span"></div>
+        </div>
+        <div class="a7">
+          <img class="profile-img-jpg" src="profile-img-jpg0.png" />
+          <div class="span2">
+            <div class="cs-24-mt-018">CS24MT018</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="rectangle-20"></div>
+    </div>
+    <div class="bread-crumb">
+      <div class="enroll-student">Enroll Student</div>
+      <div class="ol">
+        <div class="enrollment3">Enrollment</div>
+        <div class="li">
+          <div class="div3">/</div>
+          <div class="student5">Student</div>
+        </div>
+      </div>
+      <div class="component-7">
+        <div class="scan-to-take-attendance">Enroll Student to Course</div>
+      </div>
+    </div>
+    <div class="div4">
+      <div class="table">
+        <div class="h-5">
+          <div class="current-student">Current Student</div>
+          <div class="input2">
+            <div class="div-placeholder2">
+              <div class="search">Search...</div>
+            </div>
+          </div>
+        </div>
+        <div class="tr">
+          <div class="th">
+            <div class="div5">#</div>
+          </div>
+          <div class="th2">
+            <div class="student-name">Student name</div>
+          </div>
+          <div class="th3">
+            <div class="course-code">Course Code</div>
+          </div>
+          <div class="th4">
+            <div class="student-id">Student Id</div>
+          </div>
+          <div class="th5">
+            <div class="action">Action</div>
+          </div>
+        </div>
+        <div class="tbody">
+          <div class="tr2">
+            <div class="_1">1</div>
+            <div class="manoj-baj">Manoj Baj</div>
+            <div class="bit">BIT</div>
+            <div class="manoj-2-gmail">manoj2@gmail</div>
+            <div class="frame-8">
+              <img class="edit" src="edit0.svg" />
+              <img class="trash-2" src="trash-20.svg" />
+            </div>
+          </div>
+        </div>
+        <div class="tbody">
+          <div class="tr2">
+            <div class="_1">1</div>
+            <div class="mario-db">mario DB</div>
+            <div class="bit">BIT</div>
+            <div class="mario-gmail-com">mario@gmail.com</div>
+            <div class="frame-8">
+              <img class="edit2" src="edit1.svg" />
+              <img class="trash-22" src="trash-21.svg" />
+            </div>
+          </div>
+        </div>
+        <div class="tbody">
+          <div class="tr2">
+            <div class="_1">1</div>
+            <div class="kiara-advani">Kiara Advani</div>
+            <div class="bit">BIT</div>
+            <div class="kiara-gmail-com">kiara@gmail.com</div>
+            <div class="frame-8">
+              <img class="edit3" src="edit2.svg" />
+              <img class="trash-23" src="trash-22.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,429 @@
+{% extends 'admin/master.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+  <div class="bread-crumb">
+    <div class="profile3">Profile</div>
+    <div class="ol">
+      <div class="home">Home</div>
+      <div class="li">
+        <div class="div">/</div>
+        <div class="profile2">Profile</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form">
+    <div class="div2">
+      <div class="update-information">Update your information</div>
+      <div class="form2">
+        
+        <div class="div3">
+          <label class="subject-name" for="name">Name</label>
+          <input id="name" type="text" class="form-control input-input-password-5" placeholder="Name">
+        </div>
+
+        <div class="div4">
+          <label class="old-password" for="email">Email</label>
+          <input id="email" type="email" class="form-control input-input-address-2" placeholder="Email">
+        </div>
+
+        <div class="div4">
+          <label class="new-password" for="password">Password</label>
+          <input id="password" type="password" class="form-control input-input-address-2" placeholder="Password">
+        </div>
+
+        <div class="div5">
+          <button class="button" onclick="updateStudent()">
+            <div class="submit">Submit</div>
+          </button>
+          <button class="button2" type="reset">
+            <div class="reset">Reset</div>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  async function updateStudent() {
+      const id = "{{ admin_id }}";
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const data = { id, name, email, password };
+      const metaContent = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      // Create a temporary div element to parse the HTML string
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = metaContent;
+
+      // Get the input element from the parsed HTML
+      const csrfToken = tempDiv.querySelector('input').value;
+
+      console.log(csrfToken);
+
+      try {
+          const response = await fetch('/api/admins/profile/update/', {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': csrfToken 
+              },
+              body: JSON.stringify(data),
+          });
+
+          if (response.ok) {
+              alert('Information updated successfully!');
+          } else {
+              const errorData = await response.json();
+              alert('Failed to create student: ' + JSON.stringify(errorData));
+          }
+      } catch (error) {
+          alert('An error occurred: ' + error.message);
+      }
+  }
+</script>
+  
+
+{% endblock %}
+
+{% block css %}
+
+<style>
+
+.content,
+.content * {
+  box-sizing: border-box;
+}
+.content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.bread-crumb {
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 50px;
+  position: relative;
+  overflow: hidden;
+}
+.profile3 {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 24px;
+  line-height: 28.8px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ol {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 0px;
+  top: 28.8px;
+}
+.home {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.li {
+  padding: 0px 0px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 7.17px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.div {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.profile2 {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.form {
+  background: #ffffff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 564px;
+  position: relative;
+  box-shadow: 0px 0px 30px 0px rgba(1, 41, 112, 0.1);
+}
+.div2 {
+  padding: 20px 12px 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.update-information {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.form2 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.div3 {
+  padding: 0px 8px 0px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 540px;
+  height: 70px;
+  position: relative;
+}
+.subject-name {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.input-input-password-5 {
+  background: #ffffff;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  padding: 0px 10px 0px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 36px;
+  position: relative;
+}
+.name2 {
+  color: #6c757d;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div4 {
+  padding: 0px 8px 0px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.old-password {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.input-input-address-2 {
+  background: #ffffff;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  padding: 7px 12px 7px 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.div-placeholder {
+  padding: 0px 298px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.assign-a-teacher {
+  color: #6c757d;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.new-password {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div5 {
+  padding: 0px 8px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.button {
+  background: #0d6efd;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #0d6efd;
+  border-width: 1px;
+  padding: 7px 12.94px 7px 13px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.submit {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button2 {
+  background: #6c757d;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #6c757d;
+  border-width: 1px;
+  padding: 7px 13.17px 7px 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.reset {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+</style>
+
+{% endblock %}

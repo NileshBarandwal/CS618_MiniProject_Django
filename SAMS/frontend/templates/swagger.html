@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="SwaggerUI" />
+    <title>SwaggerUI</title>
+    <!-- Load Swagger UI CSS from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
+    {% load static %}  <!-- Load static template tag -->
+</head>
+<body>
+    <div id="swagger-ui"></div> <!-- Ensure this div is present -->
+    
+    <!-- Load Swagger UI JS from CDN -->
+    <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js" crossorigin></script>
+    <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-standalone-preset.js" crossorigin></script>
+    
+    <script>
+        window.onload = () => {
+            window.ui = SwaggerUIBundle({
+                url: "{% static 'docs/swagger.yaml' %}",  // Use static tag to point to your swagger.yaml
+                dom_id: '#swagger-ui',
+                presets: [
+                    SwaggerUIStandalonePreset,  // Load the standalone preset
+                    SwaggerUIBundle.presets.apis // Load APIs preset (optional)
+                ],
+                layout: "StandaloneLayout", // Layout for the Swagger UI
+            });
+        };
+    </script>
+</body>
+</html>

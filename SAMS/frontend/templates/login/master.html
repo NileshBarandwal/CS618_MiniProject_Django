@@ -1,0 +1,294 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content='{% csrf_token %}'>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'student/vars.css' %}">
+  
+  {% block css %} {% endblock %}
+    <style>
+      a,
+      button,
+      input,
+      select,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border: none;
+        text-decoration: none;
+        background: none;
+
+        -webkit-font-smoothing: antialiased;
+      }
+
+      menu,
+      ol,
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .login-master,
+.login-master * {
+  box-sizing: border-box;
+}
+.login-master {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 100vh;
+  position: relative;
+}
+.wrapper {
+  background: #f6f9ff;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.header {
+  background: #ffffff;
+  padding: 9px 20px 9px 20px;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 60px;
+  position: relative;
+  box-shadow: 0px 2px 20px 0px rgba(1, 41, 112, 0.1);
+}
+.sams {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 26px;
+  line-height: 26px;
+  font-weight: 700;
+  position: absolute;
+  left: 17px;
+  top: calc(50% - 13px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.body {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.content {
+  padding: 40px;
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  row-gap: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.students-attendance {
+  color: #212529;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 64px;
+  line-height: 76.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+}
+.management-system {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 64px;
+  line-height: 76.8px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+}
+.description {
+  color: #757f8e;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  width: 621px;
+}
+.form-container {
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.footer {
+  background: #a0aaf8;
+  padding: 20px 10px 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.copyright {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.c-2024-sams-all-rights-resered {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.privacy-policy {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.terms-of-service {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.contact-us {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="login-master">
+      <div class="wrapper">
+        <div class="header">
+          <div class="sams">SAMS</div>
+        </div>
+        <div class="body">
+          <div class="content">
+            <div class="title">
+              <div class="students-attendance">Students Attendance</div>
+              <div class="management-system">Management System</div>
+              <div class="description">
+                A web application for taking and managing attendance. Primary
+                feature is the barcode scanner which scans the barcode on
+                student’s id card and automatically updates the attendance on
+                database. Students and teachers can view their attendance in
+                real-time. Charts and reports are generated based on the
+                attendance
+              </div>
+            </div>
+            <div class="form-container">
+                {% block content %} {% endblock %}
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="copyright">
+            <div class="c-2024-sams-all-rights-resered">
+              C 2024 SAMS All rights resered
+            </div>
+          </div>
+          <div class="links">
+            <div class="privacy-policy">Privacy Policy</div>
+            <div class="terms-of-service">Terms of Service</div>
+            <div class="contact-us">Contact Us</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% block scripts %} {% endblock %}
+  </body>
+</html>

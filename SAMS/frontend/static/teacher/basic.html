@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/vars.css' %}">
+  <link rel="stylesheet" href="{% static 'teacher/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   {% block css %} {% endblock %}
+  <style>
+   a,
+   button,
+   input,
+   select,
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   * {
+       box-sizing: border-box;
+       margin: 0;
+       padding: 0;
+       border: none;
+       text-decoration: none;
+       background: none;
+   
+       -webkit-font-smoothing: antialiased;
+   }
+   
+   menu, ol, ul {
+       list-style-type: none;
+       margin: 0;
+       padding: 0;
+   }
+
+   </style>
+  <title>{% block title %}  {% endblock %}</title>
+</head>
+
+
+<body>
+
+    <div class="header-header">
+        <div class="div">
+          <div class="a">
+            <div class="attendance-system">SAMS</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="take-attendance">
+
+      <div class="bread-crumb">
+        <div class="attendance">Attendance</div>
+        <div class="ol">
+          <div class="teack">Teack</div>
+          <div class="li">
+            <div class="separator">/</div>
+            <div class="attendance2">Attendance</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sidebar">
+        <div class="ul-sidebar-nav">
+            <div class="track">Track</div>
+            <div class="a2">
+                <div class="take-attendance2">Take Attendance</div>
+                <div class="lucide-file-spreadsheet">
+                    <img class="group" src="{% static 'teacher/group0.svg' %}" />
+                </div>
+            </div>
+            <div class="a-nalyze">ANalyze</div>
+            <div class="a3">
+                <img class="material-symbols-table-chart-view-outline-rounded" src="{% static 'teacher/material-symbols-table-chart-view-outline-rounded0.svg' %}" />
+                <div class="dashboard">Dashboard</div>
+            </div>
+            <div class="a3">
+                <div class="report">Report</div>
+                <img class="carbon-report" src="{% static 'teacher/carbon-report0.svg' %}" />
+            </div>
+            <div class="manage">Manage</div>
+            <div class="a3">
+                <div class="div5"></div>
+                <div class="manage-attendance">Manage Attendance</div>
+                <img class="ph-student-bold" src="{% static 'teacher/ph-student-bold0.svg' %}" />
+            </div>
+            <div class="a3">
+                <div class="div5"></div>
+                <div class="profile">Profile</div>
+                <img class="ph-student-bold2" src="{% static 'teacher/ph-student-bold1.svg' %}" />
+            </div>
+            <div class="exit">exit</div>
+            <div class="a4">
+                <div class="logout">Logout</div>
+                <img class="icon-park-outline-logout" src="{% static 'teacher/icon-park-outline-logout0.svg' %}" />
+            </div>
+        </div>
+    </div>
+    </div>
+
+    {% block body %} {% endblock %}
+    
+    <div class="footer">
+      <div class="footer-content">
+        <p class="footer-text">© 2024 SAMS. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <a href="#" class="footer-link">Contact Us</a>
+        </div>
+      </div>
+    </div>
+
+</body>
+</html>

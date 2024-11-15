@@ -1,0 +1,928 @@
+{% extends 'reuse/basic.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="content">
+    <div class="bread-crumb">
+      <div class="dashbaord">Dashbaord</div>
+      <div class="ol">
+        <div class="track">Track</div>
+        <div class="li">
+          <div class="div">/</div>
+              <div class="profile2">Courses</div>
+              <div class="div">/</div>
+              <div class="profile2">Attendance</div>
+              <div class="div">/</div>
+              <div class="profile2">Attendance Sheet</div>
+        </div>
+      </div>
+    </div>
+    <div class="content-wrap">
+      <div class="div2">
+
+        <div class="course-select">
+
+          <form method="get" action="{% url 'teacher/take_attendance' %}">
+
+            <!-- Hidden input to include student_roll in form data -->
+            <input type="hidden" name="teacher_id" value="{{ teacher.id }}">
+
+            <div class="col-1">
+                <label for="course_code" class="subject">Course</label>
+                <select id="course_code" name="course_code" class="advance-java">
+                  {% for course in courses %}
+                    <option value="{{ course.code }}" {% if course.code == course_code %}selected{% endif %}>
+                      {{ course.code}} {{ course.name }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <div class="course-select">
+              <div class="col-1">
+                  <label for="date" class="subject">Date</label>
+                  <input type="date" id="date" name="date" class="subject" value="{{ date }}">
+              </div>
+            </div>
+
+            <button type="submit" class="frame-31">
+              <div class="scan-to-take-attendance">Generate Sheet</div>
+            </button>
+
+            <div class="frame-31">
+              <div id="start-scan-btn" class="scan-to-take-attendance" accept="image/*">Scan to Take Attendance</div>
+              <div id="stop-scan-btn" style="display:none; color:white;">Stop Scanning</div>
+            </div>
+
+          </form>
+        
+      </div>
+      <div id="scanner" class="frame-30">
+        <img class="scan-2" src="{% static 'teacher/scan-10.png' %}" />
+      </div>
+    </div>
+
+    <div id="result" class="d-none" style="display: none;"></div>
+
+    <div class="attendance-sheet-table">
+      <div class="table">
+        <div class="h-5">
+          <div class="attendance-sheet">Attendance Sheet</div>
+        </div>
+        <div class="tbody">
+          <!-- Table Header -->
+          <div class="tr">
+            <div class="rectangle-19">
+              <input class="rectangle-18" type="checkbox" id="select-all-checkbox" onclick="toggleAllEntries(this)">
+            </div>
+            <div class="th">
+              <div class="div3">#</div>
+            </div>
+            <div class="th2">
+              <div class="student-id">Student Roll</div>
+            </div>
+            <div class="th3">
+              <div class="student-name">Student Name</div>
+            </div>
+            <div class="th4">
+              <div class="status">Status</div>
+            </div>
+          </div>
+    
+          <!-- Loop through the students -->
+          {% for student in students %}
+            <div class="tr2">
+              <!-- Replace rectangle-19 with a checkbox, keeping the same class -->
+              <div class="rectangle-19 status-toggle-box absent" data-status="absent">
+                <input type="checkbox" onclick="toggleStatus(this)" class="rectangle-18">
+              </div>
+              <div class="th5">
+                <div class="_1">{{ forloop.counter }}</div>
+              </div>
+              <div class="th6">
+                <div class="_2123123 roll-number" data-roll="{{ student.roll }}">{{ student.roll }}</div>
+              </div>
+              <div class="th7">
+                <div class="maria-db">{{ student.name }}</div>
+              </div>
+              <div class="th8">
+                <!-- Status text that toggles between 'Absent' and 'Present' -->
+                <div class="persent status-text">Absent</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="component-8">
+      <div class="scan-to-take-attendance" onclick="submitAttendance()">Submit</div>
+    </div>
+  </div>
+  
+  <script>
+    
+    console.log(Html5QrcodeScanner);
+
+    let isScanningFailed = false;  // Flag to prevent continuous logging of errors
+    let html5QrCode; // Declare the html5QrCode instance
+
+    function onScanSuccess(decodedText, decodedResult) {
+      console.log(`Scan result: ${decodedText}`);
+
+      document.getElementById("result").innerHTML = `Last scanned: ${decodedText}`;
+      document.getElementById("result").style.display = "block";
+
+      const rollNumber = decodedText;
+      if (rollNumber) {
+        const studentRow = document.querySelector(`.roll-number[data-roll='${rollNumber}']`);
+        console.log(studentRow)
+
+        if (studentRow) {
+          // Find the closest status toggle box and status text within the same row
+          const statusBox = studentRow.closest('.tr2').querySelector('.rectangle-19');
+          const statusText = studentRow.closest('.tr2').querySelector('.status-text');
+
+          studentRow.closest('.tr2').style.backgroundColor = "#ffffff";
+
+          // Update the status to 'present'
+          statusBox.setAttribute('data-status', 'present');
+          statusBox.classList.add('present');
+          statusBox.classList.remove('absent');
+          
+          // Update the status text in the row
+          statusText.textContent = 'Present';
+          
+          // Check the checkbox (if it's not checked already)
+          statusBox.querySelector('input[type="checkbox"]').checked = true;
+        } else {
+          console.log('Roll number not found!');
+        }
+      } else {
+        console.log('Valid roll number not detected');
+      }
+    }
+
+    // Failure handler for scan errors
+    function onScanFailure(error) {
+      if (!isScanningFailed) {
+        console.error(`Code scan error: ${error}`);
+        isScanningFailed = true;  // Set flag to true to prevent continuous logging
+      }
+    }
+
+    // Start scanning function
+    function startScanning(cameraId) {
+      html5QrCode = new Html5Qrcode("scanner"); // Initialize the scanner
+
+      html5QrCode.start(
+        cameraId,  // Using the selected camera ID
+        {
+          fps: 20,  // Optional: Increase frame rate for smoother scanning
+          qrbox: { width: 500, height: 500 }  // Optional: Set scanning box size
+        },
+        onScanSuccess,  // On successful scan, this function is called
+        onScanFailure   // On scan failure, this function is called
+      ).catch((err) => {
+        console.error("Error starting the scanner:", err);
+        alert("Unable to start the QR scanner.");
+      });
+
+      // Hide the start button and show the stop button
+      document.getElementById("start-scan-btn").style.display = "none";
+      document.getElementById("stop-scan-btn").style.display = "inline";
+    }
+
+    // Stop scanning function
+    function stopScanning() {
+      if (html5QrCode) {
+        html5QrCode.stop().then(() => {
+          console.log("QR code scanning stopped.");
+          document.getElementById("result").innerHTML = "Scanning stopped.";
+        }).catch((err) => {
+          console.error("Error stopping the scanner:", err);
+        });
+      }
+
+      // Show the start button and hide the stop button
+      document.getElementById("start-scan-btn").style.display = "inline";
+      document.getElementById("stop-scan-btn").style.display = "none";
+    }
+
+    // Function to initialize and get the cameras
+    function initializeCamera() {
+      Html5Qrcode.getCameras()
+        .then(devices => {
+          if (devices && devices.length > 0) {
+            const cameraId = devices[0].id;  // Pick the first camera (modify to allow user to choose)
+            console.log("Camera selected:", devices[0].label);  // Log camera info
+            startScanning(cameraId);  // Start scanning with the selected camera
+          } else {
+            alert("No camera available.");
+          }
+        })
+        .catch((err) => {
+          console.error("Error accessing cameras:", err);
+          alert("Unable to access the camera.");
+        });
+    }
+
+    // Trigger the scanning process when the user clicks the "Start Scanning" button
+    document.getElementById("start-scan-btn").addEventListener("click", function () {
+      initializeCamera();
+    });
+
+    // Trigger the stop scanning process when the user clicks the "Stop Scanning" button
+    document.getElementById("stop-scan-btn").addEventListener("click", function () {
+      stopScanning();
+    });
+
+    function toggleAllEntries(selectAllCheckbox) {
+      // Get all the student rows
+      const studentRows = document.querySelectorAll('.tr2');
+      
+      // Loop through each row and set the checkbox and status based on selectAllCheckbox state
+      studentRows.forEach(row => {
+        const checkbox = row.querySelector('.rectangle-18');
+        const statusDiv = row.querySelector('.persent');
+
+        // Set the checkbox state and the status text
+        checkbox.checked = selectAllCheckbox.checked;
+
+        if (selectAllCheckbox.checked) {
+          statusDiv.textContent = "Present";
+          statusDiv.classList.add("present");
+          statusDiv.classList.remove("absent");
+          row.style.backgroundColor = "#ffffff";  // Optional style for "Present"
+        } else {
+          statusDiv.textContent = "Absent";
+          statusDiv.classList.add("absent");
+          statusDiv.classList.remove("present");
+          row.style.backgroundColor = "#ffe6e6";  // Optional style for "Absent"
+        }
+      });
+    }
+
+    function toggleStatus(checkbox) {
+      // Find the nearest 'persent' div to toggle text
+      const statusDiv = checkbox.closest(".tr2").querySelector(".persent");
+      // Toggle text content based on checkbox state
+      if (checkbox.checked) {
+        statusDiv.textContent = "Present";
+        statusDiv.classList.add("present");   // Optional: style for 'Present'
+        statusDiv.classList.remove("absent"); // Optional: remove style for 'Absent'
+        statusDiv.closest('.tr2').style.backgroundColor = "#ffffff";
+      } else {
+        statusDiv.textContent = "Absent";
+        statusDiv.classList.add("absent");    // Optional: style for 'Absent'
+        statusDiv.classList.remove("present"); // Optional: remove style for 'Present'
+        statusDiv.closest('.tr2').style.backgroundColor = "#ffe6e6";
+      }
+    }
+
+    function submitAttendance() {
+      // Extract course code and date from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseCode = urlParams.get('course_code');
+      const date = urlParams.get('date');
+
+      console.log(date)
+      
+      // Initialize an empty array to store attendance data
+      const attendanceData = [];
+
+      // Loop through each row in the table to get student roll and status
+      document.querySelectorAll('.tr2').forEach(row => {
+        const studentRoll = row.querySelector('._2123123').textContent; // Assuming ._2123123 is the student roll
+        const status = row.querySelector('.persent').textContent == "Present" ? 1 : 0;
+
+        // Create an object with the extracted information and add it to the array
+        attendanceData.push({
+          student_roll: studentRoll,
+          course_code: courseCode,
+          date_value: date,
+          status: status
+        });
+      });
+
+      // Log the array to verify
+      console.log(attendanceData);
+
+      const metaContent = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      // Create a temporary div element to parse the HTML string
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = metaContent;
+
+      // Get the input element from the parsed HTML
+      const csrfToken = tempDiv.querySelector('input').value;
+
+// Log the CSRF token
+console.log(csrfToken);
+
+      fetch('/api/mark_attendances/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({ attendances: attendanceData })
+      })
+      .then(response => response.json()) 
+      .then(data => {
+        console.log("Response from server:", data);
+        if (data.message) {
+          alert(data.message); // Display the response message (e.g., "Attendance marked successfully")
+        }
+      })
+      .catch(error => {
+        console.error("Error in POST request:", error);
+        alert("There was an error marking the attendance.");
+      });
+      
+    }
+  
+  </script>
+
+{% endblock %}
+
+{% block script %}
+
+
+{% endblock %}
+
+
+{% block css %}
+
+<style>
+
+.status-box {
+        width: 30px;
+        height: 30px;
+        border: 2px solid #000;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .status-box.absent {
+        background-color: #f44336;  /* Red for absent */
+    }
+
+    .status-box.present {
+        background-color: #4CAF50;  /* Green for present */
+    }
+
+.content,
+.content * {
+  box-sizing: border-box;
+}
+.content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.bread-crumb {
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 50px;
+  position: relative;
+  overflow: hidden;
+}
+.dashbaord {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 24px;
+  line-height: 28.8px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ol {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 0px;
+  top: 28.8px;
+}
+.track {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.li {
+  padding: 0px 0px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 7.17px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.div {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.attendance {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.content-wrap {
+  display: flex;
+  flex-direction: row;
+  row-gap: 25px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.div2 {
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 26px 16px 26px 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+  flex-shrink: 0;
+  width: 700px;
+  position: relative;
+}
+.course-select {
+  border-radius: 8px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  padding: 15px 20px 15px 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.col-1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.subject {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.advance-java {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.vector {
+  flex-shrink: 0;
+  width: 9px;
+  height: 4.5px;
+  position: relative;
+  overflow: visible;
+}
+.date {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._24-02-2005 {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.vector2 {
+  flex-shrink: 0;
+  width: 9px;
+  height: 4.5px;
+  position: relative;
+  overflow: visible;
+}
+.frame-31 {
+  background: #4154f1;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.scan-to-take-attendance {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  position: relative;
+}
+.frame-30 {
+  background: #ffffff;
+  padding: 30px 100px 30px 100px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.scan-2 {
+  flex-shrink: 0;
+  width: 105px;
+  height: 123px;
+  position: relative;
+  object-fit: cover;
+}
+.attendance-sheet-table {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.h-5 {
+  padding: 20px 0px 14.59px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.attendance-sheet {
+  color: #012970;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tbody {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.tr {
+  background: #f6f6fe;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.rectangle-19 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+.rectangle-18 {
+  border-radius: 8px;
+  border-style: solid;
+  border-color: #7d7d7d;
+  border-width: 1px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 0%;
+  left: 0%;
+  bottom: 0%;
+  top: 0%;
+}
+.th {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 76.22px 11.8px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.div3 {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th2 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 146.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.student-name {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th3 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 149.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.student-id {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th4 {
+  border-style: solid;
+  border-color: rgba(223, 223, 223, 0.69);
+  border-width: 0px 0px 2px 0px;
+  padding: 9px 182.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.status {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tr2 {
+  background-color: #ffe6e6;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.th5 {
+  padding: 9px 76.22px 11.8px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+._1 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th6 {
+  padding: 9px 146.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.maria-db {
+  color: #252525;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th7 {
+  padding: 9px 149.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+._2123123 {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.th8 {
+  padding: 9px 182.39px 11.8px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.persent {
+  color: #7d7d7d;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  line-height: 20.8px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.component-8 {
+  background: #4154f1;
+  border-radius: 8px;
+  padding: 31px 65px 31px 65px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 140px;
+  height: 45px;
+  position: relative;
+}
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,167 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content='{% csrf_token %}'>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'admin/vars.css' %}">
+  <link rel="stylesheet" href="{% static 'admin/style.css' %}">
+  
+  {% block css %} {% endblock %}
+  
+  <style>
+    a,
+    button,
+    input,
+    select,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border: none;
+        text-decoration: none;
+        background: none;
+    
+        -webkit-font-smoothing: antialiased;
+    }
+    
+    menu, ol, ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .name{
+      color: #012970;
+      text-align: left;
+      font-family: "Nunito-SemiBold", sans-serif;
+      font-size: 14px;
+      line-height: 21px;
+      font-weight: 600;
+      position: absolute;
+      right: 20px;
+      top: calc(50% - 10px);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .a.active, .a2.active, .a3.active, .frame-35.active {
+      background-color: #F6F9FF;
+      color: #4154F1;
+      font-weight: bold;
+    }
+
+    </style>
+   <title>Document</title>
+ </head>
+ <body>
+   <div class="responsive">
+     <div class="wrapper">
+       <div class="header">
+         <div class="name"><a href="{% url 'admin_custom/profile' %}">{{ admin_name }} ({{ admin_id }})</a></div>
+         <div class="sams"><a href="{% url 'admin_custom/profile' %}">SAMS</a></div>
+       </div>
+       <div class="body">
+        <div class="student-sidebar">
+            <div class="ul">
+              <!-- <div class="a-nalyze">ANalyze</div> -->
+              <div class="a">
+                <!-- <img
+                  class="material-symbols-table-chart-view-outline-rounded"
+                  src="material-symbols-table-chart-view-outline-rounded0.svg"
+                /> -->
+                <!-- <div class="dashboard">Dashboard</div> -->
+              </div>
+              <div class="manage">Manage</div>
+              <div class="a2 {% if request.path == '/admin_custom/teacher' %}active{% endif %}">
+                <img
+                  class="fa-solid-chalkboard-teacher"
+                  src="{% static 'admin/ph-student-bold0.svg' %}" />
+                <div class="sigma_sidebar"><a href="{% url 'admin_custom/teacher' %}">Teacher</a></div>
+              </div>
+              <div class="a2 {% if request.path == '/admin_custom/student' %}active{% endif %}">
+                <img class="ph-student-bold" src="{% static 'admin/ph-student-bold0.svg' %}" />
+                <div class="sigma_sidebar"><a href="{% url 'admin_custom/student' %}">Student</a></div>
+              </div>
+              <div class="a3 {% if request.path == '/admin_custom/subject' %}active{% endif %}">
+                <div class="courses"><a href="{% url 'admin_custom/subject' %}">Courses</a></div>
+                <img class="ic-round-menu-book" src="{% static 'admin/ic-round-menu-book0.svg' %}" />
+              </div>
+              <div class="a3 {% if request.path == '/admin_custom/manage' %}active{% endif %}">
+                <div class="sigma_sidebar"><a href="{% url 'admin_custom/manage' %}">Slot</a></div>
+                <img class="file-dock-fill" src="{% static 'admin/file-dock-fill0.svg' %}" />
+              </div>
+              <div class="enrollment">
+                <div class="course-enrollment">COURSE ENROLLMENT</div>
+              </div>
+              <div class="a2 {% if request.path == '/admin_custom/enrollment' %}active{% endif %}">
+                <img
+                  class="fa-solid-chalkboard-teacher2"
+                  src="{% static 'admin/fa-solid-chalkboard-teacher1.svg' %}"
+                />
+                <div class="sigma_sidebar"><a href="{% url 'admin_custom/enrollment' %}">Teacher</a></div>
+              </div>
+              <div class="a2 {% if request.path == '/admin_custom/student_enrollment' %}active{% endif %}">
+                <div class="sigma_sidebar"><a href="{% url 'admin_custom/student_enrollment' %}">Student</a></div>
+                <img class="ph-student-bold2" src="{% static 'admin/ph-student-bold0.svg' %}" />
+              </div>
+              <div class="a3 {% if request.path == '/admin_custom/course_enrollment' %}active{% endif %}">
+                <div class="sigma_sidebar"><a href="{% url 'admin_custom/course_enrollment' %}">Slot</a></div>
+                <img class="file-dock-fill2" src="{% static 'admin/file-dock-fill1.svg' %}" />
+              </div>
+              <div class="ta-enrollments">TA ENROLLMENT</div>
+              <div class="frame-35 {% if request.path == '/admin_custom/TA_enrollment' %}active{% endif %}">
+                <img class="ph-student-bold3" src="{% static 'admin/ph-student-bold0.svg' %}" />
+                <div class="ta"><a href="{% url 'admin_custom/TA_enrollment' %}">TA</a></div>
+              </div>
+              <div class="exit">EXIT</div>
+              <div class="a4">
+                <!-- <img
+                  class="icon-park-outline-logout"
+                  src="{% static 'admin/icon-park-outline-logout0.svg' %}"
+                /> -->
+                <!-- <div class="exit">EXIT</div> -->
+                <div class="a2 {% if request.path == '/home/' %}active{% endif %}">
+                  <img src="{% static 'student/icon-park-outline-logout0.svg' %}" />
+                  <div class="logout"><a href="{% url 'logout' %}">Logout</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+
+         {% block content %} {% endblock %}
+
+
+       </div>
+       <div class="footer">
+         <div class="copyright">
+           <div class="c-2024-sams-all-rights-resered">
+             C 2024 SAMS All rights resered
+           </div>
+         </div>
+         <div class="links">
+           <div class="privacy-policy">Privacy Policy</div>
+           <div class="terms-of-service">Terms of Service</div>
+           <div class="contact-us">Contact Us</div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+   {% block scripts %} {% endblock %}
+   
+ </body>
+ </html>

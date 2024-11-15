@@ -1,0 +1,347 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/vars.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+  <style>
+   a,
+   button,
+   input,
+   select,
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   * {
+       box-sizing: border-box;
+       margin: 0;
+       padding: 0;
+       border: none;
+       text-decoration: none;
+       background: none;
+       font-family: "Roboto-Regular", sans-serif;
+   
+       -webkit-font-smoothing: antialiased;
+   }
+   
+   menu, ol, ul {
+       list-style-type: none;
+       margin: 0;
+       padding: 0;
+   }
+
+   .students-attendance,
+   .management-system {
+      display: inline-block; /* Change to inline-block */
+      width: max-content !important; /* Keep max-content */
+    }
+
+    .rectangle2{
+      width: 80%;
+    }
+
+    .rectangle3{
+      width: 80%;
+    }
+
+    .component-37 {
+      display: flex;
+      flex-direction: row;
+      gap: 21px;
+      align-items: center;
+      justify-content: flex-start; /* Adjusts items to start */
+      flex-wrap: wrap; /* Allows items to wrap */
+      position: relative;
+      width: 100%; /* Full width for responsiveness */
+      max-width: 1200px; /* Optional: Max width for larger screens */
+      margin: 0 auto; /* Center it in its container */
+  }
+  
+  .student, .teacher, .admin2 {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically */
+    justify-content: flex-start; /* Align items to the left */
+    background: #f0f4fb;
+    border-radius: 8px;
+    border: 1px solid #5f6ef1;
+    padding: 16px 8px;
+    gap: 12px; /* Space between elements */
+    width: 158px; /* Adjust as needed */
+    position: relative;
+  }
+
+  @media (max-width: 768px) {
+      .student, .teacher, .admin2 {
+          width: calc(50% - 14px); /* 2 items per row on smaller screens */
+      }
+
+      .frame-3 {
+        min-height: 300px; /* Adjust for smaller screens if needed */
+    }
+
+  }
+  
+  @media (max-width: 480px) {
+      .student, .teacher, .admin2 {
+          width: calc(100% - 14px); /* 1 item per row on very small screens */
+      }
+
+      .frame-3 {
+        min-height: 250; /* Adjust for smaller screens if needed */
+    }
+
+  }
+  
+  .radio-group {
+    display: flex;
+    align-items: center;
+    cursor: pointer !important; /* Change cursor to pointer for better UX */
+}
+
+.custom-radio {
+    display: none; /* Hide the default radio button */
+}
+
+.custom-radio-label {
+    display: flex;
+    align-items: center;
+}
+
+.custom-radio-circle {
+    width: 24px; /* Adjust size */
+    height: 24px; /* Adjust size */
+    border-radius: 50%;
+    border: 2px solid #5f6ef1; /* Border color */
+    margin-right: 8px; /* Space between radio and text */
+    position: relative;
+}
+
+.custom-radio-circle::after {
+    content: '';
+    display: none; /* Initially hidden */
+    width: 12px; /* Inner circle size */
+    height: 12px; /* Inner circle size */
+    border-radius: 50%;
+    background: #3c4ef1; /* Inner circle color */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.custom-radio:checked + .custom-radio-label .custom-radio-circle::after {
+    display: block; /* Show inner circle when checked */
+}
+
+.radio-text {
+    color: #3c4ef1; /* Adjust text color */
+    font-family: "Roboto-Regular", sans-serif; /* Match your font */
+    font-size: 14px; /* Match your font size */
+    line-height: 24px; /* Match line height */
+}
+
+.custom-input {
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding for input */
+  border: 1px solid #ced4da; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  font-family: "Roboto-Regular", sans-serif; /* Match font */
+  font-size: 15px; /* Font size */
+  color: #212529; /* Text color */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-top: 8px; /* Space above */
+}
+
+.custom-checkbox {
+  display: none; /* Hide default checkbox */
+}
+
+.remember-me-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer; /* Pointer on hover */
+  width: max-content;
+}
+
+.remember-me-label::before {
+  content: '';
+  width: 20px; /* Checkbox size */
+  height: 20px; /* Checkbox size */
+  border: 2px solid #5f6ef1; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  margin-right: 8px; /* Space between checkbox and text */
+  display: inline-block; /* Make it inline */
+  vertical-align: middle; /* Align with text */
+  transition: background 0.3s; /* Transition effect */
+}
+
+.custom-checkbox:checked + .remember-me-label::before {
+  background: #3c4ef1; /* Background when checked */
+  content: '✓'; /* Checkmark */
+  color: white; /* Checkmark color */
+  text-align: center; /* Center the checkmark */
+  line-height: 20px; /* Center vertically */
+}
+
+.custom-button {
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding */
+  background-color: #3c4ef1; /* Background color */
+  color: #ffffff; /* Text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  font-family: "Roboto-Regular", sans-serif; /* Match font */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer on hover */
+  transition: background-color 0.3s; /* Transition effect */
+}
+
+.custom-button:hover {
+  background-color: #5f6ef1; /* Lighter background on hover */
+}
+
+/* Footer Start */
+
+.footer {
+  background: #a0aaf8;
+  width: 100%;
+  position: relative; /* Keeps it within the normal document flow */
+  padding: 20px; /* Space around content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional */
+  
+}
+
+.footer-content {
+  text-align: center; /* Center text inside footer */
+}
+
+.footer-text {
+  color: #ffffff;
+  font-size: 14px;
+  margin: 0; /* Remove margin */
+}
+
+.footer-links {
+  margin-top: 10px; /* Space between text and links */
+}
+
+.footer-link {
+  color: #ffffff; /* Link color */
+  margin: 0 15px; /* Space between links */
+  text-decoration: none; /* Remove underline */
+  font-size: 14px; /* Consistent font size */
+}
+
+.footer-link:hover {
+  text-decoration: underline; /* Underline on hover for better UX */
+}
+
+/*-- Footer End */
+
+   </style>
+  <title>Document</title>
+</head>
+<body>
+  <div class="login">
+    <div class="rectangle"></div>
+    <div class="group-12">
+      <div class="students-attendance">Students Attendance</div>
+      <div class="management-system">Management System</div>
+    </div>
+    <div
+      class="lorem-ipsum-dolor-sit-amet-consectetur-adipisicing-elit-eveniet-itaque-accusantium-odio-soluta-corrupti-aliquam-quibusdam-tempora-at-cupiditate-quis-eum-maiores-libero-veritatis-dicta-facilis-sint-aliquid-ipsum-atque"
+    >
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, itaque
+      accusantium odio, soluta, corrupti aliquam quibusdam tempora at cupiditate
+      quis eum maiores libero veritatis? Dicta facilis sint aliquid ipsum atque?
+    </div>
+    <div class="frame-3">
+      <div class="component-37">
+        <div class="student">
+            <div class="radio-group">
+                <input type="radio" id="student" name="role" value="student" class="custom-radio">
+                <label for="student" class="custom-radio-label">
+                    <div class="custom-radio-circle"></div>
+                    <span class="radio-text">Student</span>
+                </label>
+            </div>
+        </div>
+        <div class="teacher">
+            <div class="radio-group">
+                <input type="radio" id="teacher" name="role" value="teacher" class="custom-radio">
+                <label for="teacher" class="custom-radio-label">
+                    <div class="custom-radio-circle"></div>
+                    <span class="radio-text">Teacher</span>
+                </label>
+            </div>
+        </div>
+        <div class="admin2">
+            <div class="radio-group">
+                <input type="radio" id="admin" name="role" value="admin" class="custom-radio">
+                <label for="admin" class="custom-radio-label">
+                    <div class="custom-radio-circle"></div>
+                    <span class="radio-text">Admin</span>
+                </label>
+            </div>
+        </div>
+    </div> 
+    
+    <div class="group-4">
+      <!-- <div class="rectangle2"></div> -->
+      <!-- <div class="username">Username</div> -->
+      <label class="input-label">Username</label>
+      <input class="custom-input">
+    </div>
+    <div class="group-5">
+      <!-- <div class="rectangle3"></div> -->
+      <label for="password" class="input-label">Password</label>
+      <input type="password" id="password" class="custom-input" placeholder="Enter your password">
+  </div>
+  <div class="group-7">
+    <input type="checkbox" id="remember" class="custom-checkbox">
+    <label for="remember" class="remember-me-label">Remember me</label>
+</div>
+<div class="group-3">
+  <button class="custom-button">Sign in</button>
+</div>
+    <div class="forgot-password">Forgot password?</div>
+    <div class="group-6">
+      <div class="don-t-have-an-account">Don&#039;t have an account?</div>
+      <div class="register-here">Register here</div>
+    </div>
+    
+    </div>
+      
+    </div>
+    <div class="header-header">
+      <div class="div">
+        <div class="a">
+          <div class="attendance-system">SAMS</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer-content">
+        <p class="footer-text">© 2024 SAMS. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <a href="#" class="footer-link">Contact Us</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+</body>
+</html>

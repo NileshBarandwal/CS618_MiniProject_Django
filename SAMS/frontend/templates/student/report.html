@@ -1,0 +1,704 @@
+{% extends 'student/master.html' %}
+
+{% block content %}
+
+<div class="content">
+    <div class="bread-crumb">
+      <div class="report4">Report</div>
+      <div class="ol">
+        <div class="home">Home</div>
+        <div class="li">
+          <div class="div">/</div>
+          <div class="report2">Report</div>
+        </div>
+      </div>
+    </div>
+    <div class="div2">
+      <div class="course-select">
+        <div class="col-1">
+          <div class="subject">Subject</div>
+          <div class="advance-java">Advance Java</div>
+        </div>
+        <img class="vector" src="vector0.svg" />
+      </div>
+      <div class="course-select">
+        <div class="col-1">
+          <div class="month">Month</div>
+          <div class="may">May</div>
+        </div>
+        <img class="vector2" src="vector1.svg" />
+      </div>
+      <div class="course-select">
+        <div class="col-1">
+          <div class="year">Year</div>
+          <div class="_2023">2023</div>
+        </div>
+        <img class="vector3" src="vector2.svg" />
+      </div>
+      <div class="frame-31">
+        <div class="generate-report">Generate Report</div>
+      </div>
+    </div>
+    <div class="course-list">
+      <div class="present">
+        <div class="div3">
+          <div class="h-5">
+            <div class="present-today">
+              <span>
+                <span class="present-today-span">Present</span>
+                <span class="present-today-span2"></span>
+                <span class="present-today-span3">| Today</span>
+              </span>
+            </div>
+          </div>
+          <div class="div4">
+            <div class="div5">
+              <div class="div6"></div>
+            </div>
+            <div class="div7">
+              <div class="_145">145</div>
+              <div class="_12-increase">
+                <span>
+                  <span class="_12-increase-span">12%</span>
+                  <span class="_12-increase-span2"></span>
+                  <span class="_12-increase-span3">increase</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="present2">
+        <div class="div3">
+          <div class="h-5">
+            <div class="absent-today">
+              <span>
+                <span class="absent-today-span">Absent</span>
+                <span class="absent-today-span2"></span>
+                <span class="absent-today-span3">| Today</span>
+              </span>
+            </div>
+          </div>
+          <div class="div4">
+            <div class="div5">
+              <div class="div6"></div>
+            </div>
+            <div class="div7">
+              <div class="_145">145</div>
+              <div class="_12-increase">
+                <span>
+                  <span class="_12-increase-span4">12%</span>
+                  <span class="_12-increase-span5"></span>
+                  <span class="_12-increase-span6">increase</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="present3">
+        <div class="div3">
+          <div class="h-5">
+            <div class="attendance-this-month">
+              <span>
+                <span class="attendance-this-month-span">Attendance</span>
+                <span class="attendance-this-month-span2">| This Month</span>
+              </span>
+            </div>
+          </div>
+          <div class="div4">
+            <div class="div5">
+              <div class="div6"></div>
+            </div>
+            <div class="div7">
+              <div class="_145">145</div>
+              <div class="_12-increase">
+                <span>
+                  <span class="_12-increase-span7">12%</span>
+                  <span class="_12-increase-span8"></span>
+                  <span class="_12-increase-span9">increase</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="report-month">
+      <div class="report3">(Report)</div>
+    </div>
+  </div>
+  
+
+{% endblock %}
+
+{% block css %}
+
+<style>
+
+.content,
+.content * {
+  box-sizing: border-box;
+}
+.content {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.bread-crumb {
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 50px;
+  position: relative;
+  overflow: hidden;
+}
+.report4 {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 24px;
+  line-height: 28.8px;
+  font-weight: 600;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ol {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 0px;
+  top: 28.8px;
+}
+.home {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.li {
+  padding: 0px 0px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 7.17px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.div {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.report2 {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div2 {
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 26px 16px 26px 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  box-shadow: 0px 0px 30px 0px rgba(1, 41, 112, 0.1);
+  overflow: hidden;
+}
+.course-select {
+  border-radius: 8px;
+  border-style: solid;
+  border-color: #ced4da;
+  border-width: 1px;
+  padding: 15px 20px 15px 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.col-1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.subject {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.advance-java {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.vector {
+  flex-shrink: 0;
+  width: 9px;
+  height: 4.5px;
+  position: relative;
+  overflow: visible;
+}
+.month {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.may {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.vector2 {
+  flex-shrink: 0;
+  width: 9px;
+  height: 4.5px;
+  position: relative;
+  overflow: visible;
+}
+.year {
+  color: #989797;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._2023 {
+  color: #444444;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.vector3 {
+  flex-shrink: 0;
+  width: 9px;
+  height: 4.5px;
+  position: relative;
+  overflow: visible;
+}
+.frame-31 {
+  background: #4154f1;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.generate-report {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  position: relative;
+}
+.course-list {
+  padding: 10px 0px 10px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.present {
+  background: #ffffff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 212px;
+  position: relative;
+  box-shadow: 0px 0px 30px 0px rgba(1, 41, 112, 0.1);
+}
+.div3 {
+  padding: 0px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+}
+.h-5 {
+  padding: 20px 92.33px 14.59px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.present-today {
+  text-align: left;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.present-today-span {
+  color: #4154f1;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+}
+.present-today-span2 {
+  color: #27cda5;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+}
+.present-today-span3 {
+  color: #899bbd;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21.6px;
+  font-weight: 400;
+}
+.div4 {
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 64px;
+  position: relative;
+}
+.div5 {
+  background: #f6f6fe;
+  border-radius: 32px;
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  left: 0px;
+  top: calc(50% - 32px);
+}
+.div6 {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 400;
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  width: 32.2px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.div7 {
+  padding: 0px 3.52px 1px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2.59px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  left: 64px;
+  top: calc(50% - 29.8px);
+}
+._145 {
+  color: #4154f1;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 28px;
+  line-height: 33.6px;
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._12-increase {
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+._12-increase-span {
+  color: #012970;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+}
+._12-increase-span2 {
+  color: #198754;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+}
+._12-increase-span3 {
+  color: #6c757d;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+}
+.present2 {
+  background: #ffffff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 230px;
+  position: relative;
+  box-shadow: 0px 0px 30px 0px rgba(1, 41, 112, 0.1);
+}
+.absent-today {
+  text-align: left;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.absent-today-span {
+  color: #4154f1;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+}
+.absent-today-span2 {
+  color: #27cda5;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+}
+.absent-today-span3 {
+  color: #899bbd;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21.6px;
+  font-weight: 400;
+}
+._12-increase-span4 {
+  color: #012970;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+}
+._12-increase-span5 {
+  color: #198754;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+}
+._12-increase-span6 {
+  color: #6c757d;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+}
+.present3 {
+  background: #ffffff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 252px;
+  position: relative;
+  box-shadow: 0px 0px 30px 0px rgba(1, 41, 112, 0.1);
+}
+.attendance-this-month {
+  text-align: left;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.attendance-this-month-span {
+  color: #4154f1;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+}
+.attendance-this-month-span2 {
+  color: #899bbd;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21.6px;
+  font-weight: 400;
+}
+._12-increase-span7 {
+  color: #012970;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+}
+._12-increase-span8 {
+  color: #198754;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+}
+._12-increase-span9 {
+  color: #6c757d;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+}
+.report-month {
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 32px 128px 32px 128px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 240px;
+  position: relative;
+  box-shadow: 0px 0px 30px 0px rgba(1, 41, 112, 0.1);
+}
+.report3 {
+  color: #000000;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 400;
+  position: relative;
+  width: 77px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+
+</style>
+
+{% endblock %}
