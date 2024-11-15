@@ -30,14 +30,14 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/setup.py') }}  # Include setup.py if present
+        key: ${{ runner.os }}-pip-${{ hashFiles('SAMS/requirements.txt') }}-${{ hashFiles('**/setup.py') }}  # Cache based on the correct requirements file location
         restore-keys: |
           ${{ runner.os }}-pip-
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r SAMS/requirements.txt  # Correct path to the requirements file
         pip install coverage
 
     - name: Set up the database
@@ -47,7 +47,7 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        coverage run --source='.' manage.py test --verbosity 2  # Increased verbosity
+        coverage run --source='.' manage.py test --verbosity 2  # Increased verbosity for better output
         coverage report --fail-under=60
         coverage xml
       env:
