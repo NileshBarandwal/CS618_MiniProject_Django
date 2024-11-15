@@ -43,14 +43,14 @@ jobs:
     - name: Set up the database
       run: |
         cd SAMS  # Ensure we are in the correct directory
-        export DJANGO_SETTINGS_MODULE=SAMS.settings  # Explicitly set the settings module here as well
+        export DJANGO_SETTINGS_MODULE=SAMS.SAMS.settings  # Corrected path to settings module
         python manage.py migrate --noinput
         python manage.py showmigrations  # Debugging step to check if migrations are applied
 
     - name: Run tests with coverage
       run: |
         cd SAMS  # Ensure we are in the correct directory
-        export DJANGO_SETTINGS_MODULE=SAMS.settings  # Set the settings module again
+        export DJANGO_SETTINGS_MODULE=SAMS.SAMS.settings  # Corrected path to settings module
         coverage run --source='.' manage.py test --verbosity 2
         coverage report --fail-under=60
         coverage xml
